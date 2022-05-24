@@ -1,35 +1,31 @@
 package com.test;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
 
-    public static String[] solution(String[] strArr){
+    public static String solution(String strArr){
 
-        ArrayList<String> answer = new ArrayList<>();
+        String alphaOnly = new StringBuilder(strArr.replaceAll("[^a-zA-Z]","")).reverse().toString();
 
-        for(String str : strArr ){
-            String s = new StringBuilder(str).reverse().toString();
-            answer.add(s);
+        String answer = "";
+        int idx = 0 ;
+        for(char ch : strArr.toCharArray()){
+            if( Character.isAlphabetic(ch)){
+                answer += alphaOnly.charAt(idx);
+                idx++;
+            }else {
+                answer += ch;
+            }
         }
-        return answer.toArray(new String[answer.size()]);
+        return answer;
     }
 
     public static void main(String[] args) {
         Scanner in=new Scanner(System.in);
 
-        int n = in.nextInt();
-        String[] strArr = new String[n];
-        for(int i=0 ; i<n; i++){
-            String str = in.next();
-            strArr[i] = str;
-           // System.out.println(i+":" + strArr[i]);
-        }
-        for(String s : solution(strArr)){
-            System.out.println(s);
-        }
+        String inputStr = in.next();
 
-        return;
+        System.out.println(solution(inputStr));
     }
 }
