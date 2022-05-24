@@ -5,25 +5,23 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static int[] solution(String str,char ch){
-        int[] answer = new int[str.length()] ;
-        int p = 1000 ;
-        for(int i =0 ; i< str.length() ; i++){
-            if (str.charAt(i) == ch) {
-                p = 0 ;
+    public static String solution(String str){
+        String answer ="";
+
+        int cnt = 1;
+        char chk_ch = str.charAt(0);
+        answer += chk_ch;
+        for (int i =1 ; i < str.length() ; i++ ){
+            if(str.charAt(i) != chk_ch){
+                if( cnt >1 ) {answer += cnt;}
+                chk_ch = str.charAt(i);
+                answer += chk_ch;
+                cnt = 1;
             }else{
-                p++;
+                cnt ++;
             }
-            answer[i] = p ;
         }
-        for(int i = str.length()-1 ; i >=0 ; i--){
-            if (str.charAt(i) == ch) {
-                p = 0 ;
-            }else{
-                p++;
-            }
-            answer[i] =  Integer.min(p, answer[i])  ;
-        }
+        if( cnt >1 ) {answer += cnt;}
 
         return answer;
     }
@@ -31,13 +29,9 @@ public class Main {
     public static void main(String[] args) {
         Scanner in=new Scanner(System.in);
 
-        String inputStr = in.next();
-        char ch = in.next().charAt(0);
+        String inputStr = in.nextLine();
 
-        int[] arr01 = solution(inputStr,ch);
-        for (int i : arr01) {
-            System.out.print(i+" ");
-        }
+        System.out.println(solution(inputStr));
     }
 }
 
