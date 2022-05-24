@@ -6,32 +6,26 @@ import java.util.Scanner;
 public class Main {
 
     public static int[] solution(String str,char ch){
-
-        ArrayList<Integer> answer = new ArrayList<>();
-
-        int idx = 0;
-        idx = str.indexOf(ch);
-        for(int i =0 ; i < idx ; i++){
-            answer.add(idx - i);
-        }
-        answer.add(0);
-        str = str.substring(idx+1);
-
-        while( (idx = str.indexOf(ch)) >= 0){
-            for(int i =0 ; i < idx ; i++){
-                answer.add( Integer.min(i+1, idx - i));
+        int[] answer = new int[str.length()] ;
+        int p = 1000 ;
+        for(int i =0 ; i< str.length() ; i++){
+            if (str.charAt(i) == ch) {
+                p = 0 ;
+            }else{
+                p++;
             }
-            answer.add(0);
-            str = str.substring(idx+1);
+            answer[i] = p ;
         }
-
-        if( !str.isEmpty()){
-            for(int i = 1 ; i<= str.length() ; i++){
-                answer.add(i);
+        for(int i = str.length()-1 ; i >=0 ; i--){
+            if (str.charAt(i) == ch) {
+                p = 0 ;
+            }else{
+                p++;
             }
+            answer[i] =  Integer.min(p, answer[i])  ;
         }
 
-        return answer.stream().mapToInt(Integer::intValue).toArray();
+        return answer;
     }
 
     public static void main(String[] args) {
