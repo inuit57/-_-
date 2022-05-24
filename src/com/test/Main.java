@@ -10,7 +10,7 @@ public class Main {
         ArrayList<Character> charArr = new ArrayList<>();
 
         for(char ch : str.toCharArray()){
-            if ( charArr.indexOf(ch) < -1 || charArr.isEmpty()){
+            if ( charArr.indexOf(ch) < 0 || charArr.isEmpty()){
                 charArr.add(ch);
                 answer += ch ;
             }
