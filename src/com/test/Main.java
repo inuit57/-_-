@@ -8,20 +8,17 @@ public class Main {
     public static String solution(String str){
         String answer ="";
 
+        str += " "; // 0, 0+1 하는 식으로 비교하기 위해서
         int cnt = 1;
-        char chk_ch = str.charAt(0);
-        answer += chk_ch;
-        for (int i =1 ; i < str.length() ; i++ ){
-            if(str.charAt(i) != chk_ch){
+        for (int i =0 ; i < str.length()-1 ; i++ ){
+            if(str.charAt(i) != str.charAt(i+1)){
+                answer += str.charAt(i);
                 if( cnt >1 ) {answer += cnt;}
-                chk_ch = str.charAt(i);
-                answer += chk_ch;
                 cnt = 1;
             }else{
                 cnt ++;
             }
         }
-        if( cnt >1 ) {answer += cnt;}
 
         return answer;
     }
