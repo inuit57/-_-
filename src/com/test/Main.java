@@ -5,29 +5,26 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static String solution(String str,int n){
-        String answer ="";
-
-        str = str.replaceAll("\\#","1");
-        str = str.replaceAll("\\*","0");
-
-        //System.out.println("str = " + str);
-        for(int i = 0 ; i < n ; i++){
-            int idx = 7*i ;
-            String sub = str.substring(idx,idx+7);
-            answer += (char)Integer.parseInt(sub,2);
+    public static int solution(Scanner in , int size){
+        int cnt = 1 ;
+        int curr = in.nextInt();
+        for(int i =1 ; i < size  ; i++){
+            int next = in.nextInt();
+            if( next > curr){
+                curr = next ;
+                cnt ++ ;
+            }
         }
-
-        return answer;
+        return cnt ;
     }
 
     public static void main(String[] args) {
         Scanner in=new Scanner(System.in);
 
         int n = in.nextInt();
-        String inputStr = in.next();
+        int result = solution(in, n);
+        System.out.println(result);
 
-        System.out.println(solution(inputStr,n));
     }
 }
 
