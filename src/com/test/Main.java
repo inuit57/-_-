@@ -8,24 +8,35 @@ public class Main {
         Scanner in=new Scanner(System.in);
 
         int n = in.nextInt();
-        in.nextLine();
-        String inputStr = in.nextLine().replace(" ","");
+        int[] arr = new int[n] ;
 
-        System.out.println(solution(inputStr));
-    }
-
-    private static int solution(String inputStr) {
-        int score = 0 ;
-        String[] results = inputStr.split("0");
-
-        for(String str : results){
-            for(int i = 1 ; i <= str.length(); i++){
-                score += i ;
-            }
+        for(int i = 0 ; i < n ; i++){
+            arr[i] = in.nextInt();
         }
 
-        return score;
+        int[] result = solution(arr);
+        for(int i =0 ; i< n ; i++){
+            System.out.print(result[i] + " ");
+        }
+
     }
+
+    private static int[] solution(int[] arr) {
+        int size = arr.length;
+        int[] rank = new int[size] ;
+        for(int i = 0 ; i < size ; i++){
+            rank[i]++;
+            for(int j = i+1 ; j < size ; j++){
+                if( arr[j] > arr[i]){
+                    rank[i]++;
+                }else if(arr[j] < arr[i]){
+                    rank[j]++;
+                }
+            }
+        }
+        return rank;
+    }
+
 }
 
 
