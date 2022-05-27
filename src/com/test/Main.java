@@ -1,57 +1,37 @@
 package com.test;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
-    public static void main(String[] args) {
-        Main T = new Main();
-        Scanner in = new Scanner(System.in);
-
-        int a, b;
-        a = in.nextInt();
-        int[] arrA = new int[a];
-        for(int i =0 ; i < a; i++){
-            arrA[i] = in.nextInt() ;
-        }
-        b = in.nextInt();
-        int[] arrB = new int[b];
-        for(int i=0 ; i< b; i++){
-            arrB[i] = in.nextInt();
+    public static void main(String[] args){
+        Scanner in=new Scanner(System.in);
+        int input1 = in.nextInt();
+        Set<Integer> arr1 = new HashSet<>();
+        for(int i =0 ; i< input1; i++){
+            arr1.add(in.nextInt());
         }
 
-        for(int ans : T.solution(a,b,arrA,arrB)){
-            System.out.print(ans + " ");
+        int input2 = in.nextInt();
+        List<Integer> answer = new ArrayList<>();
+        for(int i =0 ; i< input2; i++){
+            int tmp = in.nextInt();
+            if( arr1.contains(tmp)){
+                //System.out.print(tmp +" ");
+                answer.add(tmp);
+            }
         }
+
+        Collections.sort(answer);
+        for(int ans : answer){
+            System.out.print(ans +" ");
+        }
+
+
     }
 
 
-    private int[] solution(int a, int b, int[] arrA, int[] arrB) {
-        int[] answer = new int[a+b] ;
-        int pa, pb , idx ;
-        idx=pa=pb=0;
 
-        while((pa < a) && (pb < b)){
-            if( arrA[pa] > arrB[pb]){
-                answer[idx++] = arrB[pb++];
-            }else{
-                answer[idx++] = arrA[pa++];
-            }
-        }
-        
-        // 남은  찌거기 제거
-        if( pa >= a){
-            for(int i = pb ; i< b; i++){
-                answer[idx++] = arrB[i];
-            }
-        }
-        if( pb >= b){
-            for(int i = pa ; i< a; i++){
-                answer[idx++] = arrA[i]; 
-            }
-        }
-        return answer;
-    }
 }
 
 
