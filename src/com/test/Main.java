@@ -13,14 +13,14 @@ public class Main {
         ex = in.nextInt(); // 3
 
         arr = new int[ex][stu];
-        for (int i = 0; i < stu; i++) {
-            for (int j = 0; j < ex; j++) {
+        for (int i = 0; i < ex; i++) {
+            for (int j = 0; j < stu; j++) {
                 arr[i][j] = in.nextInt();
             }
         }
 
 
-        System.out.println("n = " + solution(stu, ex));
+        System.out.println(solution(stu, ex));
     }
 
 
