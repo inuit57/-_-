@@ -4,45 +4,51 @@ import java.util.Scanner;
 
 public class Main {
 
-    static int[][] arr;
-
     public static void main(String[] args) {
+        Main T = new Main();
         Scanner in = new Scanner(System.in);
-        int stu, ex;
-        stu = in.nextInt(); // 4
-        ex = in.nextInt(); // 3
 
-        arr = new int[ex][stu];
-        for (int i = 0; i < ex; i++) {
-            for (int j = 0; j < stu; j++) {
-                arr[i][j] = in.nextInt();
-            }
+        int a, b;
+        a = in.nextInt();
+        int[] arrA = new int[a];
+        for(int i =0 ; i < a; i++){
+            arrA[i] = in.nextInt() ;
+        }
+        b = in.nextInt();
+        int[] arrB = new int[b];
+        for(int i=0 ; i< b; i++){
+            arrB[i] = in.nextInt();
         }
 
-
-        System.out.println(solution(stu, ex));
+        for(int ans : T.solution(a,b,arrA,arrB)){
+            System.out.print(ans + " ");
+        }
     }
 
 
-    private static int solution(int stu, int ex) {
-        int answer = 0;
-        for (int i = 1; i <= stu; i++) {
-            for (int j = 1; j <= stu; j++) {
-                // 학생 조합 설정
-                int cnt = 0;
-                for (int k = 0; k < ex; k++) {
-                    int pi = 0, pj = 0;
-                    for (int s = 0; s < stu; s++) {
-                        if (arr[k][s] == i) pi = s;
-                        if (arr[k][s] == j) pj = s;
-                    }
-                    if (pi < pj) cnt++;
-                }
-                if (cnt == ex) {
-                    answer++;
-                }
-            }
+    private int[] solution(int a, int b, int[] arrA, int[] arrB) {
+        int[] answer = new int[a+b] ;
+        int pa, pb , idx ;
+        idx=pa=pb=0;
 
+        while((pa < a) && (pb < b)){
+            if( arrA[pa] > arrB[pb]){
+                answer[idx++] = arrB[pb++];
+            }else{
+                answer[idx++] = arrA[pa++];
+            }
+        }
+        
+        // 남은  찌거기 제거
+        if( pa >= a){
+            for(int i = pb ; i< b; i++){
+                answer[idx++] = arrB[i];
+            }
+        }
+        if( pb >= b){
+            for(int i = pa ; i< a; i++){
+                answer[idx++] = arrA[i]; 
+            }
         }
         return answer;
     }
