@@ -6,30 +6,48 @@ public class Main {
 
     public static void main(String[] args){
         Scanner in=new Scanner(System.in);
-        int input1 = in.nextInt();
-        Set<Integer> arr1 = new HashSet<>();
-        for(int i =0 ; i< input1; i++){
-            arr1.add(in.nextInt());
+        int n = in.nextInt(); // 전체 숫자
+
+        int k = in.nextInt(); // 연속된 일 수
+
+        int[] arr = new int[n];
+        for(int i=0 ; i< n; i++){
+            arr[i] = in.nextInt();
         }
 
-        int input2 = in.nextInt();
-        List<Integer> answer = new ArrayList<>();
-        for(int i =0 ; i< input2; i++){
-            int tmp = in.nextInt();
-            if( arr1.contains(tmp)){
-                //System.out.print(tmp +" ");
-                answer.add(tmp);
-            }
-        }
-
-        Collections.sort(answer);
-        for(int ans : answer){
-            System.out.print(ans +" ");
-        }
-
+        System.out.println(solution(n,k,arr) );
 
     }
 
+    private static int solution(int n, int k, int[] arr) {
+
+        int stt = 0 ;
+        int end = k-1 ;
+        int max = -1 ;
+
+        int start = 0;
+        for(int i=0; i < k ; i++){
+            start += arr[i] ;
+        }
+        if( n == k ) {
+            return start ;
+        }
+
+        int before = start ;
+        max = start;
+
+        while( end < n-1 ){
+            end ++;
+            int next = before + arr[end] - arr[stt];
+            stt++;
+            if( next > max){
+                max = next ;
+            }
+            before = next;
+        }
+
+        return max ;
+    }
 
 
 }
