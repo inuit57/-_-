@@ -25,6 +25,7 @@ public class Main {
             }
         }
         System.out.println(answer);
+
     }
 
     private static int solution(int n, int k, int[] arr) {
