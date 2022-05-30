@@ -21,32 +21,16 @@ public class Main {
 
     private static int solution(int n, int k, int[] arr) {
 
-        int stt = 0 ;
-        int end = k-1 ;
-        int max = -1 ;
+        int answer , sum =0 ;
+        // 첫번째 윈도우 생성
+        for(int i =0 ; i< k ; i++) sum +=arr[i] ;
+        answer = sum;
 
-        int start = 0;
-        for(int i=0; i < k ; i++){
-            start += arr[i] ;
+        for(int i =k ; i< n ; i++){
+            sum += (arr[i] - arr[i-k]);
+            answer = Math.max(answer,sum);
         }
-        if( n == k ) {
-            return start ;
-        }
-
-        int before = start ;
-        max = start;
-
-        while( end < n-1 ){
-            end ++;
-            int next = before + arr[end] - arr[stt];
-            stt++;
-            if( next > max){
-                max = next ;
-            }
-            before = next;
-        }
-
-        return max ;
+        return answer ;
     }
 
 
