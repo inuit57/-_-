@@ -11,22 +11,17 @@ public class Main {
         Map<Character,Integer> map = new HashMap<>();
 
         String vote = in.next();
-        for(int i =0 ; i < vote.length() ; i++){
-            Integer curr = map.get(vote.charAt(i));
-            if( curr == null){
-                map.put(vote.charAt(i),1);
-            }else{
-                map.replace(vote.charAt(i), curr+1);
-            }
-        }
 
-        Set<Character> sets = map.keySet();
-        int max = -1;
-        char answer ='a' ;
-        for(char ch : sets){
-            if( map.get(ch) > max){
-                max = map.get(ch);
-                answer = ch ;
+        for(char x : vote.toCharArray()){
+            map.put(x, map.getOrDefault(x,0)+1);
+        }
+        int max = Integer.MIN_VALUE;
+        char answer = ' ';
+        for (char key : map.keySet()){
+            // System.out.println(x+" "+ map.get(x));
+            if( max < map.get(key)){
+                max = map.get(key);
+                answer = key ;
             }
         }
         System.out.println(answer);
