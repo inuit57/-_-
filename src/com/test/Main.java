@@ -16,17 +16,12 @@ public class Main {
         }
 
         String input2 = in.next();
-        Map<Character,Integer> map2 = new HashMap<>();
         for(char x : input2.toCharArray()){
-            map2.put(x, map2.getOrDefault(x,0)+1);
-        }
-
-        for(char key : map.keySet()){
-            if( map.getOrDefault(key,0) !=
-                    map2.get(key)){
+            if( !map.containsKey(x) || map.get(x) == 0){
                 System.out.println("NO");
                 return;
             }
+            map.put(x, map.get(x)-1); // 하나씩 빼준다.
         }
         System.out.println("YES");
     }
