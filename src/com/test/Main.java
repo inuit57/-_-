@@ -1,46 +1,45 @@
 package com.test;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args){
         Main T = new Main();
         Scanner in=new Scanner(System.in);
-        String str = in.next(); //
+        int n = in.nextInt(); //
 
-        String obj = in.next(); // 연속된 길이
+        int k = in.nextInt(); // 연속된 길이
 
-        System.out.println(T.solution(str,obj));
-    }
-
-    private int isAnagram(Map<Character,Integer> map, String str){
-        for(char ch : str.toCharArray()){
-            if( !map.containsKey(ch) || (map.get(ch) <= 0)){
-//                System.out.println("str FAIL : " + str);
-                return 0;
-            }
-            map.put(ch, map.get(ch) -1) ;
+        int[] arr = new int[n];
+        for(int i =0 ; i < n ; i++){
+            arr[i] = in.nextInt();
         }
-//        System.out.println("str PASS : " + str);
-        return 1;
+
+        System.out.println(T.solution(n,k,arr));
     }
-    private int solution(String str, String obj) {
+
+    private int solution(int n, int k, int[] arr) {
+        // 조합 공식 : n!/(n-3)!*3!
+        int max_no = (n*(n-1)*(n-2))/6;
+        if( k > max_no) return -1;
+
         int answer = 0 ;
+        // 저장될 때 내림차순으로 저장된다.
+        TreeSet<Integer> Tset = new TreeSet<>(Collections.reverseOrder());
 
-        HashMap<Character,Integer> map = new HashMap<>();
-        // obj 값을 맵에 집어넣기
-        for(char x : obj.toCharArray()){
-            map.put(x, map.getOrDefault(x,0)+1);
+        // 무식하게 3중 포문으로 3개 모두 뽑아내자.
+        // 3개 뽑는 데에는 이게 가장 효율적인 방법일까?
+        for(int i =0 ; i < n ; i++){
+            for(int j= i+1 ; j<n; j++){
+                for(int l = j+1 ; l< n ;l++){
+                    Tset.add(arr[i]+arr[j]+arr[l]);
+                }
+            }
         }
 
-        for(int lt = 0 ; lt <= str.length() - obj.length() ; lt++){
-            String x = str.substring(lt, lt + obj.length());
-//            System.out.println(x);
-            answer += isAnagram(new HashMap<>(map), x);
-        }
-
-
-        return answer ;
+        answer = Tset.stream().collect(Collectors.toList()).get(k-1);
+        return answer;
     }
 
 }
