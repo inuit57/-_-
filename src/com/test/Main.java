@@ -4,40 +4,43 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args){
+        Main T = new Main();
         Scanner in=new Scanner(System.in);
-        int n = in.nextInt(); //
+        String str = in.next(); //
 
-        int k = in.nextInt(); // 연속된 길이
+        String obj = in.next(); // 연속된 길이
 
-        int[] arr = new int[n];
-        for(int i =0 ; i< n ; i++){
-            arr[i] = in.nextInt();
-        }
-        //System.out.println(solution(n,k,arr));
-        solution(n,k,arr);
+        System.out.println(T.solution(str,obj));
     }
 
-    private static int solution(int n, int k, int[] arr) {
-        int lt =0;
-
-        HashMap<Integer,Integer> map = new HashMap<>();
-        // 최초로 값 집어넣기
-        for(int i =0 ; i < k ; i++){
-            map.put(arr[i],map.getOrDefault(arr[i],0)+1);
-        }
-        System.out.print(map.size()+" ");
-
-        for(int rt=k ; rt < n ;rt++){
-            map.put(arr[lt],
-                    map.get(arr[lt])-1);
-            if( map.get(arr[lt])== 0){
-                map.remove(arr[lt]);
+    private int isAnagram(Map<Character,Integer> map, String str){
+        for(char ch : str.toCharArray()){
+            if( !map.containsKey(ch) || (map.get(ch) <= 0)){
+//                System.out.println("str FAIL : " + str);
+                return 0;
             }
-            lt++;
-            map.put(arr[rt],
-                    map.getOrDefault(arr[rt],0)+1);
-            System.out.print(map.size() + " ");
+            map.put(ch, map.get(ch) -1) ;
         }
-        return 0;
+//        System.out.println("str PASS : " + str);
+        return 1;
     }
+    private int solution(String str, String obj) {
+        int answer = 0 ;
+
+        HashMap<Character,Integer> map = new HashMap<>();
+        // obj 값을 맵에 집어넣기
+        for(char x : obj.toCharArray()){
+            map.put(x, map.getOrDefault(x,0)+1);
+        }
+
+        for(int lt = 0 ; lt <= str.length() - obj.length() ; lt++){
+            String x = str.substring(lt, lt + obj.length());
+//            System.out.println(x);
+            answer += isAnagram(new HashMap<>(map), x);
+        }
+
+
+        return answer ;
+    }
+
 }
