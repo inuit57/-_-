@@ -21,14 +21,18 @@ public class Main {
         }
 
         boolean[] chosen = new boolean[n];
-        combination_DFS(arr,chosen, 0, n,k ,0 );
+        combination_DFS(arr, 0, n,k ,0 );
 
         System.out.println(treeSet.stream().collect(Collectors.toList()).get(k-1));
+
+//        combination_BFS(arr,chosen, 0, n,k ,0 );
+//
+//        System.out.println(treeSet.stream().collect(Collectors.toList()).get(k-1));
         //System.out.println(T.solution(n,k,arr));
     }
 
     // DFS 방식 조합 탐색
-    static void combination_DFS(int[] arr, boolean[] chosen , int start ,int n,  int r, int sum ){
+    static void combination_DFS(int[] arr,  int start ,int n,  int r, int sum ){
         if( r== 0){
             treeSet.add(sum);
             return;
@@ -37,12 +41,23 @@ public class Main {
             return;
         }
         // start 번째를 선택한 경우
-        chosen[start] = true;
-        combination_DFS(arr, chosen, start+1, n, r-1, sum+arr[start]);
+        combination_DFS(arr,  start+1, n, r-1, sum+arr[start]);
 
         // start 번째를 선택하지 않은 경우
-        chosen[start] = false;
-        combination_DFS(arr, chosen, start+1, n, r, sum);
+        combination_DFS(arr,  start+1, n, r, sum);
+    }
+
+    static void combination_BFS(int[] arr, boolean[] chosen , int start ,int n,  int r, int sum ){
+        if( r == 0){
+            treeSet.add(sum);
+            return;
+        }
+        for(int i =start ; i < n ; i++){
+            //chosen[i] = true;
+            combination_BFS(arr,chosen, start, n, r-1, sum+arr[start]);
+            //chosen[i] = false;
+            combination_BFS(arr,chosen, start, n, r, sum);
+        }
     }
 
 
