@@ -9,29 +9,57 @@ public class Main {
         Main T = new Main();
         Scanner in=new Scanner(System.in);
 
-        String str = in.next();  // 괄호 문자열
+        int n = in.nextInt();
+        
+        // board 설정
+        List<Queue<Integer>> board = new ArrayList<>() ;
+        for(int i =0 ; i< n ;i++){
+            board.add(new LinkedList<>());
+        }
 
-        System.out.println(T.solution(str));
-    }
-
-    private String solution(String str) {
-        Stack<Character> stack = new Stack<>();
-        String answer ="";
-
-        for(char x : str.toCharArray()){
-            if( x == ')'){
-                stack.pop();
-            }else if(x == '('){
-                stack.push(x); // '('
-            }else{  //알파벳
-                if(stack.isEmpty()){
-                    answer += x; // 붙여주기
+        // board 값 채우기 (Queue 에 저장)
+        for(int i =0 ; i < n ; i++){
+            for(int j =0 ; j< n ; j++){
+                int input = in.nextInt();
+                if(input != 0) {
+                    board.get(j).add(input);
                 }
-                // push 도 해줄 필요가 없지 싶다.
             }
         }
-        return answer;
+
+        // moves 배열
+        int m = in.nextInt();
+        int[] moves = new int[m];
+        for(int i =0 ; i< m ; i++){
+            moves[i] = in.nextInt()-1;
+        }
+
+        /**
+         List<Queue<Integer>> board
+         int n
+         int[] moves
+         */
+        System.out.println(T.solution(board, n, moves));
+
     }
 
+    private int solution(List<Queue<Integer>> board, int n, int[] moves) {
+        Stack<Integer> stack = new Stack<>();
+        int answer =0 ;
+        for(int i =0 ; i < moves.length; i++){
+            int curr =0 ;
+            if( !board.get(moves[i]).isEmpty()) {
+                curr = board.get(moves[i]).remove();
+            }
+            if( !stack.isEmpty() && stack.peek() == curr){
+                stack.pop();
+                answer ++;
+            }else {
+                stack.push(curr);
+            }
+        }
+
+        return answer*2;
+    }
 
 }
