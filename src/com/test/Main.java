@@ -9,57 +9,38 @@ public class Main {
         Main T = new Main();
         Scanner in=new Scanner(System.in);
 
-        int n = in.nextInt();
-        
-        // board 설정
-        List<Queue<Integer>> board = new ArrayList<>() ;
-        for(int i =0 ; i< n ;i++){
-            board.add(new LinkedList<>());
-        }
+        String str = in.next();
 
-        // board 값 채우기 (Queue 에 저장)
-        for(int i =0 ; i < n ; i++){
-            for(int j =0 ; j< n ; j++){
-                int input = in.nextInt();
-                if(input != 0) {
-                    board.get(j).add(input);
-                }
-            }
-        }
-
-        // moves 배열
-        int m = in.nextInt();
-        int[] moves = new int[m];
-        for(int i =0 ; i< m ; i++){
-            moves[i] = in.nextInt()-1;
-        }
-
-        /**
-         List<Queue<Integer>> board
-         int n
-         int[] moves
-         */
-        System.out.println(T.solution(board, n, moves));
+        System.out.println((int)T.solution(str));
 
     }
 
-    private int solution(List<Queue<Integer>> board, int n, int[] moves) {
-        Stack<Integer> stack = new Stack<>();
-        int answer =0 ;
-        for(int i =0 ; i < moves.length; i++){
-            int curr =0 ;
-            if( !board.get(moves[i]).isEmpty()) {
-                curr = board.get(moves[i]).remove();
-            }
-            if( !stack.isEmpty() && stack.peek() == curr){
-                stack.pop();
-                answer ++;
-            }else {
-                stack.push(curr);
+    private double calculate(double a, double b, char op){
+        switch (op){
+            case '+' : return b+a;
+            case '-' : return b-a;
+            case '*' : return b*a;
+            case '/' : return b/a;
+        }
+        return 0;
+    }
+
+    private double solution(String str) {
+        double answer = 0;
+        Stack<Double> stk = new Stack<>();
+        for(char ch : str.toCharArray()){
+            if( Character.isDigit(ch)){
+                stk.push((double)(ch-'0'));
+            }else{
+                //answer = calculate(stk.pop()-'0',stk.peek()-'0',ch);
+                answer = calculate(stk.pop(),stk.pop(),ch);
+                stk.push(answer);
             }
         }
 
-        return answer*2;
+        answer = stk.pop();
+
+        return answer;
     }
 
 }
