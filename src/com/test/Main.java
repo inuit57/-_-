@@ -20,30 +20,14 @@ public class Main {
         Stack<Character> stack = new Stack<>();
 
         int answer = 0 ;
-
-        for(char ch : str.toCharArray()) {
-            if(ch == '('){
-                stack.push(ch);
-            }else if(ch == ')'){
-                if(stack.peek() =='('){ // 레이저 판단
-                    stack.pop();
-                    if( !stack.isEmpty()) {
-                        stack.push('!'); // 레이저 표시
-                    }
-                }else{
-                    int cnt = 0 ;
-                    while(stack.peek() != '('){
-                        if( stack.pop() == '!'){
-                            cnt ++;
-                        }
-                    }
-                    stack.pop(); // '(' pop.
-                    answer += (cnt+1);
-                    if(!stack.isEmpty()) {
-                        for (int i = 0; i < cnt; i++) {
-                            stack.push('!');
-                        }
-                    }
+        for(int i= 0 ; i< str.length(); i++){
+            if( str.charAt(i) == '(') stack.push('(');
+            else{
+                stack.pop();
+                if(str.charAt(i-1) == '(') { // 레이저
+                    answer += stack.size(); // 스택에 있는 막대기 갯수를 더해준다.
+                }else {
+                    answer++;
                 }
             }
         }
