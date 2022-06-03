@@ -11,34 +11,42 @@ public class Main {
 
         String str = in.next();
 
-        System.out.println((int)T.solution(str));
+        System.out.println(T.solution(str));
 
     }
 
-    private double calculate(double a, double b, char op){
-        switch (op){
-            case '+' : return b+a;
-            case '-' : return b-a;
-            case '*' : return b*a;
-            case '/' : return b/a;
-        }
-        return 0;
-    }
+    private int solution(String str) {
 
-    private double solution(String str) {
-        double answer = 0;
-        Stack<Double> stk = new Stack<>();
-        for(char ch : str.toCharArray()){
-            if( Character.isDigit(ch)){
-                stk.push((double)(ch-'0'));
-            }else{
-                //answer = calculate(stk.pop()-'0',stk.peek()-'0',ch);
-                answer = calculate(stk.pop(),stk.pop(),ch);
-                stk.push(answer);
+        Stack<Character> stack = new Stack<>();
+
+        int answer = 0 ;
+
+        for(char ch : str.toCharArray()) {
+            if(ch == '('){
+                stack.push(ch);
+            }else if(ch == ')'){
+                if(stack.peek() =='('){ // 레이저 판단
+                    stack.pop();
+                    if( !stack.isEmpty()) {
+                        stack.push('!'); // 레이저 표시
+                    }
+                }else{
+                    int cnt = 0 ;
+                    while(stack.peek() != '('){
+                        if( stack.pop() == '!'){
+                            cnt ++;
+                        }
+                    }
+                    stack.pop(); // '(' pop.
+                    answer += (cnt+1);
+                    if(!stack.isEmpty()) {
+                        for (int i = 0; i < cnt; i++) {
+                            stack.push('!');
+                        }
+                    }
+                }
             }
         }
-
-        answer = stk.pop();
 
         return answer;
     }
