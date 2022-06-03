@@ -1,5 +1,7 @@
 package test06;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class Main {
@@ -17,27 +19,18 @@ public class Main {
 
     private int solution(int n, int k) {
 
-        int[] arr = new int[n+1] ;
-
-        int remove = 0;
-        arr[0] = 1;
-        for (int i = 0; i < n-1 ; i++) {
-            for (int j = 0; j < k; j++) {
-                remove = (remove + 1) % (n+1);
-                while (arr[remove] == 1) {
-                    remove = (remove + 1) % n;
-                }
-            }
-            System.out.println("remove[" + i + "] = " + remove);
-            arr[remove] = 1;
+        Queue<Integer> queue = new LinkedList<>();
+        for(int i=1; i<= n ;i++){
+            queue.offer(i);
         }
 
-        for(int i = 1 ; i<= n; i++){
-            if( arr[i] == 0){
-                return  i;
+        while(queue.size() !=1){
+            for(int i =0 ; i< k-1; i++){
+                queue.offer(queue.poll()); // 빼고 다시 넣는다.
             }
+            queue.poll();
         }
 
-        return  remove ;
+        return queue.poll();
     }
 }
