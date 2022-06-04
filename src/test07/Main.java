@@ -32,9 +32,8 @@ public class Main {
             }else{
                 continue;
             }
-
         }
-
+        if(!requiredQueue.isEmpty()) return "NO";
         return "YES";
     }
 }
