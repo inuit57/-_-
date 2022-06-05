@@ -20,8 +20,13 @@ public class Main {
         int j,key ;
         for(int i =1 ; i < n; i++){
             key = arr[i];
-            for(j=i-1; j>=0 && arr[j]>key; j--){
-                arr[j+1] = arr[j]; // 레코드의 오른쪽으로 이동
+            for(j=i-1; j>=0 ; j--){
+                if( arr[j] > key) {
+                    arr[j + 1] = arr[j]; // 레코드의 오른쪽으로 이동
+                }
+                else {
+                    break;
+                }
             }
             arr[j+1] = key;
         }
