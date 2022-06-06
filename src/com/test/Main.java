@@ -15,25 +15,19 @@ public class Main {
             arr[i] = in.nextInt();
         }
 
-        T.solution(n,arr);
+        for(int x : T.solution(n,arr)) System.out.print(x+" ");;
         return ;
     }
 
-    void solution( int n , int[] arr){
-        int pt = -1;
-        for(int i = n-1; i >0 ; i--){
-            if( arr[i] < arr[i-1]){
-                pt = i ;  // 범인 찾음
-                break;
-            }
+    ArrayList<Integer> solution( int n , int[] arr){
+        ArrayList<Integer> answer = new ArrayList<>();
+        int[] tmp = arr.clone();
+        Arrays.sort(tmp);
+        for(int i=0 ; i< n ; i++){
+            if(arr[i] != tmp[i] ) answer.add(i+1);
         }
-        for(int i =0 ; i < pt ; i++){
-            if( arr[i] > arr[pt]){
-                System.out.print(i+1 + " ");
-                break;
-            }
-        }
-        System.out.print(pt+1);
+
+        return answer;
     }
 
 
