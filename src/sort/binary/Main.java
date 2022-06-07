@@ -27,8 +27,6 @@ public class Main {
         int min = 1 ;
         // 결정 알고리즘에서는 최소, 최댓값 범위 설정이 중요하다.
 
-//        System.out.println(isPossible(arr,k,2));
-//        //System.out.println(isPossible(arr,k,3));
         while( min < max){
             int mid = (min + max)/2 ;
 
@@ -56,9 +54,6 @@ public class Main {
             if( cnt >= k) return true;
             cnt = 0 ;
         }
-//        if( cnt < k) return false;
-//
-//        return true ;
         return (cnt > k) ;
     }
 }
