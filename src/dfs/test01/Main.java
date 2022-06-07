@@ -6,8 +6,12 @@ class Main{
     static int n, total=0;
     boolean flag=false;
     public void DFS(int L, int sum, int[] arr){
+
+        // 가지치기
         if(flag) return;
         if(sum>total/2) return;
+
+
         if(L==n){
             if((total-sum)==sum){
                 answer="YES";
