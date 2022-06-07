@@ -3,6 +3,21 @@ package dfs.test01;
 import java.util.Scanner;
 
 public class Main {
+    static String answer ="NO";
+    static int n,total = 0;
+    boolean flag = false;
+    public void DFS(int L, int sum, int[] arr){
+        if(flag) return;
+        if(L==n){
+            if((total-sum) == sum){
+                answer="YES";
+                flag =true;
+            }
+        }else{
+            DFS(L+1, sum+arr[L],arr);
+            DFS(L+1, sum, arr);
+        }
+    }
 
     public static void main(String[] args) {
         Main T = new Main();
@@ -14,26 +29,7 @@ public class Main {
             arr[i] = in.nextInt();
         }
 
-        System.out.println(T.solution(arr,n));
-    }
-
-    private String solution(int[] arr, int n) {
-        if(dfs(arr,n, 0,0) == 0) return "YES";
-        else return "NO";
-    }
-
-    private int dfs( int[] arr, int n , int sum1, int sum2 ){
-        if( n == 0 ) {
-            return (sum1 - sum2) ;
-        }
-
-        // sum1 에 넣는 경우
-        int answer = dfs(arr, n-1, sum1 + arr[n-1], sum2);
-
-        // sum2 에 넣는 경우
-        int answer2 = dfs(arr, n-1 , sum1 , sum2+arr[n-1] );
-
-        if( (answer == 0) || (answer2 == 0) ) return  0;
-        else return -1;
+        T.DFS(0,0,arr);
+        System.out.println(answer);
     }
 }
