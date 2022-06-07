@@ -45,15 +45,12 @@ public class Main {
 
     private boolean isPossible(int[] arr, int k, int mid) {
         int cnt = 1 ;
-        for(int i =0 ; i < arr.length - k ; i++){
-            for(int j =i+1; j< arr.length ; j++){
-                if((arr[j] - arr[i]) >= mid){
-                    i = j;
-                    cnt ++;
-                }
+        int ep = 0 ;
+        for(int j =ep+1; j< arr.length ; j++){
+            if((arr[j] - arr[ep]) >= mid){
+                ep = j;
+                cnt ++;
             }
-            if( cnt >= k) return true;
-            cnt = 1 ;
         }
 
         return (cnt >=k) ;
