@@ -4,31 +4,38 @@ import java.util.*;
 
 public class Main {
 
+    static class Point{
+        int x, y ;
+        Point(int x, int y ){
+            this.x = x;
+            this.y = y;
+        }
+    }
 
     public static void main(String[] args){
         Main T = new Main();
         Scanner in=new Scanner(System.in);
         int n = in.nextInt();
-        int[] arr = new int[n];
 
+        ArrayList<Point> list = new ArrayList<>();
         for(int i =0 ; i < n ; i++){
-            arr[i] = in.nextInt();
+            list.add(new Point(in.nextInt(), in.nextInt()));
         }
 
-        for(int x : T.solution(n,arr)) System.out.print(x+" ");;
+        list.sort(new Comparator<Point>() {
+            @Override
+            public int compare(Point o1, Point o2) {
+                return o1.x != o2.x ?
+                        o1.x - o2.x :
+                        o1.y - o2.y;
+            }
+        });
+
+        for(int i =0 ; i< n; i++){
+            Point pt = list.get(i);
+            System.out.println(pt.x + " " + pt.y);
+        }
         return ;
     }
-
-    ArrayList<Integer> solution( int n , int[] arr){
-        ArrayList<Integer> answer = new ArrayList<>();
-        int[] tmp = arr.clone();
-        Arrays.sort(tmp);
-        for(int i=0 ; i< n ; i++){
-            if(arr[i] != tmp[i] ) answer.add(i+1);
-        }
-
-        return answer;
-    }
-
 
 }
