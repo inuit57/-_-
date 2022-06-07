@@ -1,5 +1,6 @@
 package sort.binary;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -14,45 +15,50 @@ public class Main {
         for(int i = 0 ; i < n ; i++){
             arr[i] = in.nextInt();
         }
+
+        Arrays.sort(arr);
         System.out.println(T.solution(arr,n,m));
 
     }
 
     int solution(int[] arr, int n, int k){
-        int answer = Integer.MAX_VALUE ;
-        int max = 0;
-        for(int i =0 ; i< n; i++){
-            max += arr[i] ;
-        }
-        int min = max / k ;
+        int answer = Integer.MIN_VALUE ;
+        int max = arr[n-1] ;
+        int min = 1 ;
         // 결정 알고리즘에서는 최소, 최댓값 범위 설정이 중요하다.
 
+//        System.out.println(isPossible(arr,k,2));
+//        //System.out.println(isPossible(arr,k,3));
         while( min < max){
             int mid = (min + max)/2 ;
 
-            int chk = check(arr, k, mid);
-            if( chk < 0){
+            if( isPossible(arr,k,mid)){
+                answer = Math.max(mid,answer); // 현재 최댓값을 저장하자.
                 min = mid+1;
             }
-            else if(chk > 0){
-                answer = Math.min(mid,answer); // 현재 최댓값을 저장하자.
+            else{
                 max = mid;
             }
         }
         return answer;
     }
 
-    private int check(int[] arr, int k, int mid) {
+    private boolean isPossible(int[] arr, int k, int mid) {
         int cnt = 1 ;
-        int sum = 0 ;
-        for(int x : arr){
-            sum += x ;
-            if(sum > mid){
-                sum = x ;
-                cnt++ ;
+        for(int i =0 ; i < arr.length - k ; i++){
+            for(int j =i+1; j< arr.length ; j++){
+                if((arr[j] - arr[i]) > mid){
+                    //System.out.println("(i , j ) : " + "("+i+","+j+")");
+                    i = j;
+                    cnt ++;
+                }
             }
-            if( cnt > k ) return -1; // mid 증가 필요
+            if( cnt >= k) return true;
+            cnt = 0 ;
         }
-        return 1 ;  // mid 값 감소 필요
+//        if( cnt < k) return false;
+//
+//        return true ;
+        return (cnt > k) ;
     }
 }
