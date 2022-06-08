@@ -18,6 +18,11 @@ public class Main {
 
     static int dis2[];
 
+    /**
+     * 최소거리 저장용 배열 사용 방식
+     * 
+     * @param v : 탐색 시작 정점
+     */
     private void BFS(int v){
         Queue<Integer> queue = new LinkedList<>();
         chk[v] = 1;
@@ -35,6 +40,11 @@ public class Main {
         }
     }
 
+    /**
+     * 트리 순회 방식 ( level 사용 ) 
+     *
+     * @param v : 탐색 시작 정점
+     */
     private void BFS2(int v){
         int level =0 ;
         Queue<Integer> queue = new LinkedList<>();
