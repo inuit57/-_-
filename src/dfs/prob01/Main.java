@@ -27,6 +27,17 @@ public class Main {
         System.out.println(answer);
     }
 
+    // 강사님 풀이
+    private void DFS(int L, int sum, int[] arr){
+        if(sum >= c ) return;
+        if(L == n){
+            answer = Math.max(answer,sum);
+        }else{
+            DFS(L+1, sum+arr[L] , arr);
+            DFS(L+1, sum, arr);
+        }
+    }
+
     private void DFS(int L) {
         if( L >= n){
             int sum =0 ;
