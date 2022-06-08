@@ -16,6 +16,8 @@ public class Main {
     // 1번에서 각 정점까지의  최소 거리를 저장
     static int dis[] ;
 
+    static int dis2[];
+
     private void BFS(int v){
         Queue<Integer> queue = new LinkedList<>();
         chk[v] = 1;
@@ -33,6 +35,30 @@ public class Main {
         }
     }
 
+    private void BFS2(int v){
+        int level =0 ;
+        Queue<Integer> queue = new LinkedList<>();
+        chk[v] = 1;
+        dis2[v] = 0;
+        queue.offer(v);
+
+        while( !queue.isEmpty()){
+            int size = queue.size();
+            for(int i =0 ; i< size; i++){ //큐 안의 갯수만큼 순회
+                int curr = queue.poll();
+                dis2[curr] = level;
+                // 하나씩 뽑고 자식노드들을 큐에 다시 넣는다.
+                for(int nv : graph.get(curr)){
+                    if( chk[nv] == 0){
+                        chk[nv] = 1;
+                        queue.offer(nv);
+                    }
+                }
+            }
+            level++;
+        }
+    }
+
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         Main T = new Main();
@@ -40,7 +66,7 @@ public class Main {
         m = in.nextInt();
         chk = new int[n+1];
         dis = new int[n+1];
-
+        dis2 = new int[n+1] ;
 
         for(int i=0 ; i <= n; i++){
             graph.add(new ArrayList<>());
