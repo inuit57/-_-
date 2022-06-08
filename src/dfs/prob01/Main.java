@@ -33,6 +33,7 @@ public class Main {
             for(int i =0 ; i< n ; i++){
                 if(chk[i]!=0){
                     sum += arr[i];
+                    if( sum >= c) return; // 가지치기
                 }
             }
             if(sum < c){
