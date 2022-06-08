@@ -14,7 +14,7 @@ public class Main {
 
         n = in.nextInt();
         m = in.nextInt();
-        for(int i =0 ; i< n ; i++ ){
+        for(int i =0 ; i<= n ; i++ ){
             graph.add(new ArrayList<>());
         }
         chk = new int[n+1];
