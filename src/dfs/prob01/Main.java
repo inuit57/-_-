@@ -25,6 +25,7 @@ public class Main {
 
         T.DFS(0);
         System.out.println(T.DFS(0,0,arr));
+        System.out.println(T.DFS(0,0));
         System.out.println(answer);
     }
 
@@ -40,6 +41,20 @@ public class Main {
             );
 
         }
+    }
+
+    private int DFS(int curr, int sum) {
+        if( sum >= c) return -1; //제외시키는 쪽으로 짜는게 맞았네.
+        if( curr >=n ){
+            //System.out.println("sum : " + sum);
+            return sum;
+        }else{
+            return Math.max(
+                    DFS(curr+1, sum+arr[curr]),  // 넣는 경우
+                    DFS(curr+1, sum) // 넣지 않는 경우
+            );
+        }
+
     }
 
     private void DFS(int L) {
