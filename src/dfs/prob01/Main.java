@@ -24,17 +24,21 @@ public class Main {
         }
 
         T.DFS(0);
+        System.out.println(T.DFS(0,0,arr));
         System.out.println(answer);
     }
 
-    // 강사님 풀이
-    private void DFS(int L, int sum, int[] arr){
-        if(sum >= c ) return;
+    // 강사님 풀이 + 수정
+    private int DFS(int L, int sum, int[] arr){
+        if(sum >= c ) return -1;
         if(L == n){
-            answer = Math.max(answer,sum);
+            return sum;
         }else{
-            DFS(L+1, sum+arr[L] , arr);
-            DFS(L+1, sum, arr);
+            return Math.max(
+                DFS(L+1, sum+arr[L] , arr),
+                DFS(L+1, sum, arr)
+            );
+
         }
     }
 
