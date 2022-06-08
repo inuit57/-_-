@@ -12,10 +12,6 @@ class Node{
     }
 }
 
-enum Type{
-    PREFIX,INFIX,POSTFIX
-}
-
 public class Main {
     Node root;
     public int DFS(int L,Node root){
