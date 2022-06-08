@@ -27,12 +27,13 @@ public class Main {
     private void DFS(int v) {
         if( v == n ){
             answer++;
-        }
-        for(int i =0 ; i< n; i++){
-            if(graph[v][i] == 1 && chk[i] ==0){
-                chk[i] =1;
-                DFS(i);
-                chk[i] = 0; // back tracking
+        }else {
+            for (int i = 0; i < n; i++) {
+                if (graph[v][i] == 1 && chk[i] == 0) {
+                    chk[i] = 1;
+                    DFS(i);
+                    chk[i] = 0; // back tracking
+                }
             }
         }
     }
