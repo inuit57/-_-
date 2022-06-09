@@ -1,5 +1,7 @@
 package dfs.maze01;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class Main {
@@ -21,11 +23,49 @@ public class Main {
                 maze[i][j] = in.nextInt();
             }
         }
-        maze[0][0] = 1 ; // 이걸 안 해주면 2배수가 되어버린다.
+//        maze[0][0] = 1 ; // 이걸 안 해주면 2배수가 되어버린다.
 
-        T.DFS(0,0);
-        System.out.println(answer);
+//        T.DFS(0,0);
+//        System.out.println(answer);
+        System.out.println(T.BFS(0,0));
     }
+
+    static class Point{
+        int x, y ;
+        Point(int x, int y){
+            this.x = x;
+            this.y = y;
+        }
+    }
+
+    private int BFS(int x, int y){
+        // 시작점 입력 받기
+        int L = 0 ;
+        Queue<Point> queue = new LinkedList<>();
+        queue.add(new Point(0,0));
+        while(!queue.isEmpty()){
+            int len = queue.size();
+            for(int i =0 ; i< len ;i++){
+                Point curr = queue.poll();
+                maze[curr.x][curr.y] = 1;  // 되돌아가지 못하도록 막기
+
+                if( curr.x == 6 && curr.y == 6) {
+                    return L;
+                }
+
+                for(int j= 0 ; j< 4; j++){
+                    int dx = curr.x + px[j];
+                    int dy = curr.y + py[j];
+                    if( dx < 7 && dy < 7 && dx >=0 && dy >= 0 && maze[dx][dy]!=1){
+                        queue.add(new Point(dx,dy));
+                    }
+                }
+            }
+            L++;
+        }
+        return L ;
+    }
+
 
     private void DFS(int x, int y){
         if( x == 6 && y == 6){
