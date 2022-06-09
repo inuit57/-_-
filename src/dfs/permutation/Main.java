@@ -38,6 +38,7 @@ public class Main {
     }
 
     private void DFS(int depth) {
+        if( f < 0 ) return; // 이미 찾았다면 더 찾지 말도록
         if (depth == n) {
             if( calculate(resultArray) == f){
                 for(int x : resultArray){
