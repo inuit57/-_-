@@ -63,7 +63,7 @@ public class Main {
             }
             L++;
         }
-        return L ;
+        return -1 ; // 도착할 수 없는 경우 추가
     }
 
 
