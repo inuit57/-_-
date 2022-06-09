@@ -21,8 +21,10 @@ public class Main {
                 maze[i][j] = in.nextInt();
             }
         }
+        maze[0][0] = 1 ; // 이걸 안 해주면 2배수가 되어버린다.
+
         T.DFS(0,0);
-        System.out.println(answer/2);
+        System.out.println(answer);
     }
 
     private void DFS(int x, int y){
