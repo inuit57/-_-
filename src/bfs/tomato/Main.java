@@ -47,11 +47,12 @@ public class Main {
         for(int i =0 ; i< m; i++) {
             for (int j = 0; j < n; j++) {
                 if(box[i][j] == 1){
-                    return 0; // -1
+                    return -1 ;
                 }
             }
         }
-        return L;
+        // 미리 넣어놓았으니까 -1 을 해줘야한다.
+        return L-1 ;
     }
 
     public static void main(String[] args) {
