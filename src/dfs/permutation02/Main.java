@@ -8,6 +8,7 @@ public class Main {
     static int[] resultArray ;
     static int n ;
     static int m ;
+    static StringBuilder str = new StringBuilder();
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         Main T = new Main();
@@ -20,14 +21,17 @@ public class Main {
 
 
         T.DFS(0 ); // nPn
+        System.out.println(str);
     }
 
     private void DFS(int depth) {
         if (depth == m) {
             for(int x : resultArray){
-                System.out.print(x + " ");
+                //System.out.print(x + " ");
+                str.append(x);
+                str.append(' ');
             }
-            System.out.println();
+            str.append('\n');
             return;
         }
         for(int i =0 ; i< n ;i++){
