@@ -17,15 +17,6 @@ public class Main {
             this.start = start;
             this.end = end;
         }
-
-        /**
-         * 다음 방 신청자가 사용할 수 있는지 파악
-         * @param room : 다음 방 신청 정보 
-         * @return : 사용 가능 여부 리턴
-         */
-        public boolean isPossible(Room room){
-            return this.end <= room.start ;
-        }
     }
 
     static boolean[] chk ;
@@ -43,13 +34,15 @@ public class Main {
         for(int i =0; i< n; i++){
             rooms.add(new Room(in.nextInt(),in.nextInt()));
         }
-        // 시작 시간 순서로 정렬해서 제공할 필요가 있어 보인다.
-        rooms.sort(Comparator.comparingInt(room-> room.start));
+        // 끝나는 시간으로 오름차순 정렬,
+        // 단, 같은 경우에는 시작시간으로 오름차순으로 정렬할 것.
+        rooms.sort( (o1,o2)-> o1.end == o2.end ? o1.start - o2.start : o1.end - o2.end);
         T.DFS(0,0);
         System.out.println(answer);
     }
 
     private void DFS(int L, int end) {
+        if(L > n) return;
         if( L == n){
             int cnt =0 ;
             for(int i =0 ; i< n ;i++){
