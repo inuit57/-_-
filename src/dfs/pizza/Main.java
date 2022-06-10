@@ -58,20 +58,13 @@ public class Main {
         check = new boolean[pizza.size()];
         pizza_num = pizza.size();
 
-        System.out.println(pizza.size());
-        
 
-        // 결국 필요한 것은
-        // 어떻게 M 개의 피자집을 선택할 것인가 라는
-        // 조합 문제로 귀결된다.
-
-        /**
-         1) M개의 피자집을 고른다.
-         2) 골라진 파자집들을 가지고 최소 거리를 계산한다.
-         3) 모든 조합의 경우를 확인할 때까지 반복한다.
-
-         */
+//         1) M개의 피자집을 고른다.
+//         2) 골라진 파자집들을 가지고 최소 거리를 계산한다.
+//         3) 모든 조합의 경우를 확인할 때까지 반복한다.
         T.DFS2(0 , 0);
+
+        System.out.println(answer);
 
     }
 
@@ -105,11 +98,11 @@ public class Main {
     private void DFS2(int L, int cnt) {
         // 갯수가 m가 되었다면
         if( cnt == m) {
-            System.out.println("test: " + chk.size());
-            for (Point p : chk) {
-                System.out.println("p.x +\":\"+p.y = " + p.x + ":" + p.y);
+            int sum = 0 ;
+            for(Point p : home){
+                sum += p.getMinDistance(chk);
             }
-            System.out.println();
+            answer = Math.min(sum,answer);
         }else if(L < pizza_num){
             Point p = pizza.get(L);
             if(!chk.contains(p)) {
