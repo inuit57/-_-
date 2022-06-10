@@ -39,6 +39,8 @@ public class Main {
         rooms.sort( (o1,o2)-> o1.end == o2.end ? o1.start - o2.start : o1.end - o2.end);
 //        T.DFS(0,0);
 //        System.out.println(answer);
+        // 10,000건 넘어가니까 stackOverflowError 가 난다. DFS는
+
         System.out.println(T.solution(rooms,n));
     }
 
