@@ -37,8 +37,21 @@ public class Main {
         // 끝나는 시간으로 오름차순 정렬,
         // 단, 같은 경우에는 시작시간으로 오름차순으로 정렬할 것.
         rooms.sort( (o1,o2)-> o1.end == o2.end ? o1.start - o2.start : o1.end - o2.end);
-        T.DFS(0,0);
-        System.out.println(answer);
+//        T.DFS(0,0);
+//        System.out.println(answer);
+        System.out.println(T.solution(rooms,n));
+    }
+
+    private int solution(ArrayList<Room> arr, int n){
+        int cnt = 0 ;
+        int et = 0 ;
+        for(Room r : arr){
+            if(r.start >= et){
+                cnt++;
+                et = r.end;
+            }
+        }
+        return cnt;
     }
 
     private void DFS(int L, int end) {
