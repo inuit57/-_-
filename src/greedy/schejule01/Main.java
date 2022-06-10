@@ -26,25 +26,28 @@ public class Main {
 
         for(int key : map.keySet()){
             // 정렬 , 큰 순서대로
-            Collections.sort(map.get(key),Collections.reverseOrder());
+            map.get(key).sort(Collections.reverseOrder());
         }
 
         // key 들도 정렬하기
-        List<Integer> keyList = map.keySet().stream().collect(Collectors.toList());
+        List<Integer> keyList = new ArrayList<>(map.keySet());
         Collections.sort(keyList);
 
         int sum =0 ;
-        for(int d= minDay ; d <= maxDay ; d++ ){
+        for(int d= maxDay ; d >= minDay ; d-- ){  // 반대로 해보자.
             int max = Integer.MIN_VALUE ;
-            int max_idx = 0 ;
+            int max_idx = -1 ;
             for(int key : keyList){
                 if(key < d) continue;
-                if( max < map.get(key).get(0)){
+                if( (!map.get(key).isEmpty()) &&
+                        (max < map.get(key).get(0))){
                     max_idx = key;
                     max = map.get(key).get(0);
                 }
             }
-            sum += map.get(max_idx).remove(0); // 제일 컸던 놈 제거
+            if( max_idx >=0 ) {
+                sum += map.get(max_idx).remove(0); // 제일 컸던 놈 제거
+            }
         }
 
         System.out.println(sum);
