@@ -7,6 +7,7 @@ public class Main {
     static int[][] map ;
     static int answer =0 ;
     static int n;
+    // 8방향 순회
     int[] px = {1,-1,0,0,1,1,-1,-1};
     int[] py = {0,0,1,-1,1,-1,1,-1};
 
