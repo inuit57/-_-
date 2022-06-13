@@ -30,5 +30,8 @@ public class Main {
         int a = in.nextInt();
         int b = in.nextInt();
         int fa = find(a);
+        int fb = find(b);
+        if(fa == fb) System.out.println("YES");
+        else System.out.println("NO");
     }
 }
