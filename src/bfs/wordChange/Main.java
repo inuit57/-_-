@@ -1,7 +1,5 @@
 package bfs.wordChange;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
@@ -29,7 +27,7 @@ public class Main {
         return true;
     }
     public int solution(String begin, String target, String[] words) {
-        int answer = 1;
+        int answer = 0;
 
         // 단어가 없다면(!contains()) 바로 0 리턴
         // Queue 를 사용해서 BFS 로 풀이하는 편이 좋아보인다.
@@ -47,16 +45,17 @@ public class Main {
         queue.offer(begin);
 
         while(!queue.isEmpty()){
-            String lastWord = queue.poll();
-
-            if (lastWord.equals(target)) return answer+1;
-            for (int j =0 ; j< words.length ; j++) {
-                if (!check[j] && isChangeable(lastWord, words[j])) {
-                    queue.offer(words[j]);
-                    check[j] = true;
+            int size = queue.size();
+            for(int i =0 ; i<size ; i++) {
+                String lastWord = queue.poll();
+                if (lastWord.equals(target)) return answer;
+                for (int j = 0; j < words.length; j++) {
+                    if (!check[j] && isChangeable(lastWord, words[j])) {
+                        queue.offer(words[j]);
+                        check[j] = true;
+                    }
                 }
             }
-
             answer ++ ;
         }
 
