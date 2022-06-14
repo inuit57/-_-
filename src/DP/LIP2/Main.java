@@ -1,4 +1,4 @@
-package dynamicPrograming.LIP2;
+package DP.LIP2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
