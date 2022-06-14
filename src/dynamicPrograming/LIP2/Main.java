@@ -2,6 +2,7 @@ package dynamicPrograming.LIP2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Main {
@@ -38,6 +39,12 @@ public class Main {
             int weight = in.nextInt();
             legos.add(new Lego(size,height,weight)) ;
         }
+
+        Collections.sort(legos, (o1,o2)->{
+            if(o1.size == o2.size) return o2.height - o1.height;
+            else return o2.size - o1.size;
+        });
+
         System.out.println(T.solution( legos ));
     }
 
