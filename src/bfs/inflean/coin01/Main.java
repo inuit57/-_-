@@ -1,4 +1,4 @@
-package bfs.coin01;
+package bfs.inflean.coin01;
 
 import java.util.LinkedList;
 import java.util.Queue;

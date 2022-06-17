@@ -1,4 +1,4 @@
-package bfs.cow01;
+package bfs.inflean.cow01;
 
 
 import java.util.*;

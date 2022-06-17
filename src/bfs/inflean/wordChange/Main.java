@@ -1,4 +1,4 @@
-package bfs.wordChange;
+package bfs.inflean.wordChange;
 
 
 import java.util.*;

@@ -1,4 +1,4 @@
-package bfs.tree;
+package bfs.inflean.tree;
 
 
 import java.util.LinkedList;

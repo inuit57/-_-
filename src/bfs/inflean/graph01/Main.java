@@ -1,4 +1,4 @@
-package bfs.graph01;
+package bfs.inflean.graph01;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

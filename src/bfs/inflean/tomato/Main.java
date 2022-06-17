@@ -1,4 +1,4 @@
-package bfs.tomato;
+package bfs.inflean.tomato;
 
 import java.util.LinkedList;
 import java.util.Queue;
