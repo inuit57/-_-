@@ -14,9 +14,9 @@ public class Main {
             sortArr[br.read()] ++ ;
         }
 
-        for(int i = 1; i< 100001; i++){
+        for(int i = 1; i<= 10000; i++){
             for(int j =0 ; j < sortArr[i] ; j++){
-               bw.write(String.valueOf(i) + "\n");
+               bw.write(i + "\n");
             }
         }
 
