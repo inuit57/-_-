@@ -72,7 +72,9 @@ public class Main {
             int size = queue.size();
             for(int i =0 ; i< size ; i++){
                 Point p = queue.poll();
-                if( p.equals(obj)) return L;
+                if( p == null) return  -1;
+
+                if( map[p.x][p.y] == 2) return L;
 
                 check[p.x][p.y] = true;
                 map[p.x][p.y] = 0;
@@ -85,6 +87,7 @@ public class Main {
                             (map[dx][dy] == 0 || map[dx][dy] == 2) &&
                             !check[dx][dy]
                     ){
+                        check[dx][dy] = true;
                         queue.add(new Point(dx,dy));
                     }
                 }
