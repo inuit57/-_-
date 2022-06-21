@@ -34,9 +34,9 @@ public class Main {
             int size = queue.size();
             for(int i =0 ; i< size ; i++){
                 Integer q = queue.poll();
-                int cf = 0  ;
-                if( q !=null) cf = q;
+                if( q == null) return -1;
 
+                int cf = q  ;
                 if( cf == obj) return answer;
 
                 int upMove = cf + up ;
