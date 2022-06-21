@@ -9,9 +9,9 @@ public class Main {
         int[] sortArr = new int[10001];
 
 
-        int n = br.read();
+        int n = Integer.parseInt(br.readLine());
         for(int i =0 ; i< n ;i++){
-            sortArr[br.read()] ++ ;
+            sortArr[Integer.parseInt(br.readLine())] ++ ;
         }
 
         for(int i = 1; i<= 10000; i++){
