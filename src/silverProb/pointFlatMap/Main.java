@@ -19,10 +19,12 @@ public class Main {
         int[] sorted = origin.clone();
         Arrays.sort(sorted);
 
+        int rank = 0;
         for(int i = 0 ; i< n ;i++){
             int key = sorted[i];
             if( !rankMap.containsKey(key)) {
-                rankMap.put(key, i);
+                rankMap.put(key, rank);
+                rank++;
             }
         }
 
