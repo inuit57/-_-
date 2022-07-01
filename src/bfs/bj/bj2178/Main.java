@@ -54,6 +54,7 @@ public class Main {
                     int dy = p.y + py[j];
 
                     if( dx >= 0 && dy >= 0 && n > dx && m > dy && !visit[dx][dy] && arr[dx][dy] == 1) {
+                        visit[dx][dy] = true;
                         queue.add(new Point(dx, dy));
                     }
                 }
