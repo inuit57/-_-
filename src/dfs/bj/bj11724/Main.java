@@ -8,8 +8,11 @@ public class Main {
         int sp, ep ;
 
         Point(int sp,int ep){
-            this.sp = sp;
-            this.ep = ep;
+//            this.sp = sp;
+//            this.ep = ep;
+
+            this.sp = Math.min(sp,ep);
+            this.ep = Math.max(sp,ep);
         }
 
         @Override
@@ -30,7 +33,10 @@ public class Main {
 
         List<Point> pList = new ArrayList<>();
         for(int i =0  ; i< m ; i++){
-            pList.add(new Point(in.nextInt(),in.nextInt()));
+            int a = in.nextInt();
+            int b = in.nextInt();
+
+            pList.add(new Point(a,b));
         }
 
         Collections.sort(pList);
