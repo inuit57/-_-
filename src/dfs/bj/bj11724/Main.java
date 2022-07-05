@@ -3,60 +3,49 @@ package dfs.bj.bj11724;
 import java.util.*;
 
 public class Main {
+    static int[] unf ;
 
-    static class Point implements Comparable<Point> {
-        int sp, ep ;
-
-        Point(int sp,int ep){
-//            this.sp = sp;
-//            this.ep = ep;
-
-            this.sp = Math.min(sp,ep);
-            this.ep = Math.max(sp,ep);
-        }
-
-        @Override
-        public int compareTo(Point o) {
-            return this.sp == o.sp ? this.ep - o.ep : this.sp - o.sp ;
-        }
+    static int find(int v){
+        if( unf[v] == v) return v;
+        else return unf[v] = find(unf[v]);
     }
+
+    static void union(int a,int b){
+        int x = find(a);
+        int y = find(b);
+
+        if (x < y) {
+            unf[y] = x;
+        }else unf[x] = y;
+    }
+
     public static void main(String[] args){
         Scanner in = new Scanner(System.in);
 
         int n = in.nextInt();
         int m = in.nextInt();
 
-        int[] chk = new int[n+1] ;  //
-        for(int i =0 ; i<= n ; i++){
-            chk[i] = i;
+        unf = new int[n+1]; // 집합 초기화
+
+        for(int i=1 ; i<=n ; i++){
+            unf[i] = i ;
         }
 
-        List<Point> pList = new ArrayList<>();
-        for(int i =0  ; i< m ; i++){
+        for(int i =0 ; i < m ;i++){
             int a = in.nextInt();
             int b = in.nextInt();
 
-            pList.add(new Point(a,b));
+            union(a,b);
         }
 
-        Collections.sort(pList);
-        for(Point p : pList){
-            //System.out.println(p.sp +"," + p.ep);
-            int gp = p.sp ;
-            while( chk[gp] != gp ){
-                gp = chk[chk[gp]];
-            }
-            chk[p.ep] = gp ;
+
+
+        Set<Integer> set = new HashSet<>();
+        for(int i =1; i <= n ; i++){
+            set.add(find(i));
         }
 
-        for(int i =n; i > 0 ;i--){
-            if( chk[i] != i){
-                chk[i] = chk[chk[i]];
-            }
-        }
-
-        long count = Arrays.stream(chk).distinct().count();
-        System.out.println(count-1);
+        System.out.println(set.size());
     }
 
 }
