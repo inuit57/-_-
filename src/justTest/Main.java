@@ -1,5 +1,8 @@
 package justTest;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -9,28 +12,28 @@ public class Main {
     public static void main(String[] args){
         Scanner in = new Scanner(System.in);
 
-        int input = in.nextInt();
-//        System.out.println(fibo(input));
-        arr[0] = 0;
-        arr[1] = 1;
-        arr[2] = 3;
-
-        for(int i = 3; i<= 1000 ; i++){
-            arr[i] = ( arr[i-2]*2 + arr[i-1] ) % 10007 ;
+        List<Integer> users = new ArrayList<>();
+        int n = in.nextInt();
+        for(int i =0 ; i< n; i++){
+            users.add(in.nextInt());
         }
-        System.out.println(arr[input]);
+
+        Collections.sort(users);
+//        printList(users);
+
+        int answer = 0 ;
+        for(int i=0; i< n ;i++){
+            answer += users.get(i) * (n-i);
+        }
+
+        System.out.println(answer);
     }
 
-//    public static int fibo(int n){
-//        if( arr[n] != 0) return arr[n] ;
-//        if( n == 0 || n == 1) {
-//            return arr[n] = 1 ;
-//        }else{
-//            if( arr[n-1] == 0) arr[n-1] = fibo(n-1) %10007;
-//            if( arr[n-2] == 0) arr[n-2] = fibo(n-2) %10007;
-//
-//            return arr[n] = (arr[n-1] + arr[n-2])%10007 ;
-//        }
-//    }
+    private static void printList(List<Integer> users) {
+        for(int aaa : users){
+            System.out.println(aaa);
+        }
+    }
+
 
 }
