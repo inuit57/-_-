@@ -20,50 +20,40 @@ public class Main {
 
         for(int tkk = 0 ; tkk < t ; tkk++){
             int cnt = parseInt.apply(br.readLine());
-            PriorityQueue<Integer> ascQ = new PriorityQueue<>();
-            PriorityQueue<Integer> descQ = new PriorityQueue<>(Collections.reverseOrder());
+
+            TreeMap<Integer,Integer> treeMap = new TreeMap<>();
 
             for(int cs =0 ; cs < cnt ; cs ++){
                 String input = br.readLine();
                 String[] splits = input.split(" ",2);
                 if( "I".equals(splits[0])){
                     int num = parseInt.apply(splits[1]);
-                    ascQ.add(num);
-                    descQ.add(num);
-                }else{
-                    int deleteNum ;
+                    treeMap.put(num, treeMap.getOrDefault(num,0)+1);
+                }else if(!treeMap.isEmpty()){
+                    int key;
                     if("1".equals(splits[1])){
                         // 최댓값 삭제
-                        if( !descQ.isEmpty() ) {
-                            deleteNum = descQ.poll();
-                            ascQ.remove(deleteNum);
-                        }
+                        key = treeMap.lastKey();
                     }else{
-                        if( !ascQ.isEmpty() ) {
-                            deleteNum = ascQ.poll();
-                            descQ.remove(deleteNum);
-                        }
+                        key = treeMap.firstKey();
+                    }
+                    treeMap.put(key, treeMap.getOrDefault(key,1)-1);
+                    if( treeMap.get(key) == 0 ){
+                        treeMap.remove(key);
                     }
                 }
             }
-            if( descQ.isEmpty() ){
+            if( treeMap.isEmpty()){
                 answerList.add("EMPTY");
             }else{
-                StringBuilder sb = new StringBuilder();
-                sb.append(descQ.poll());
-                sb.append(" ");
-                sb.append(ascQ.poll());
-                answerList.add(sb.toString());
+                answerList.add( treeMap.lastKey() + " " + treeMap.firstKey());
             }
         } // tkk
 
-        StringBuilder sb = new StringBuilder();
-        for(String str : answerList){
-            //System.out.println(str);
-            sb.append(str);
-            sb.append("\n");
+        for(String answer : answerList){
+            System.out.println(answer);
         }
-        System.out.println(sb);
+
     }
 
 }
