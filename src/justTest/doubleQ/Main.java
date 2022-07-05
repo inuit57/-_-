@@ -1,27 +1,30 @@
 package justTest.doubleQ;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 import java.util.function.Function;
 
 public class Main {
 
-    public static void main(String[] args){
-        Scanner in = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
+        //Scanner in = new Scanner(System.in);
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         Function<String,Integer> parseInt = Integer::parseInt;
 
-        int t = in.nextInt();
+        int t = parseInt.apply(br.readLine());
 
         List<String> answerList = new ArrayList<>();
 
         for(int tkk = 0 ; tkk < t ; tkk++){
-            int cnt = in.nextInt();
+            int cnt = parseInt.apply(br.readLine());
             PriorityQueue<Integer> ascQ = new PriorityQueue<>();
             PriorityQueue<Integer> descQ = new PriorityQueue<>(Collections.reverseOrder());
 
-            in.nextLine();
             for(int cs =0 ; cs < cnt ; cs ++){
-                String input = in.nextLine();
+                String input = br.readLine();
                 String[] splits = input.split(" ",2);
                 if( "I".equals(splits[0])){
                     int num = parseInt.apply(splits[1]);
@@ -54,9 +57,13 @@ public class Main {
             }
         } // tkk
 
+        StringBuilder sb = new StringBuilder();
         for(String str : answerList){
-            System.out.println(str);
+            //System.out.println(str);
+            sb.append(str);
+            sb.append("\n");
         }
+        System.out.println(sb);
     }
 
 }
