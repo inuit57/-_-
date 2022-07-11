@@ -20,21 +20,31 @@ public class Main {
 
         stk.push(0);
 
+        // 반례
+        // 5 2
+        // 88892 -> 내가 찾은 답 : 888
+        // 원하는 답 : 892
+
+        // 여러 번 앞에서 뺄 수도 있다는 것을 생각했어야 했었다.
+        // 스택으로 풀면 되는 문제인데, 왜 Dequeue 를 사용한걸까? 겁쟁이들.
+        int max = -1;
         for(int ch : number.toCharArray()){
             ch-='0';
-            if(k == 0|| ch == stk.peek() ) stk.push(ch);
-            else if( ch > stk.peek() ){
+
+            while(k > 0 && !stk.isEmpty() && stk.peek() < ch ){
                 stk.pop();
-                stk.push(ch);
                 k--;
-            }else{
-                k--; // 아예 넣지도 않기.
             }
+            stk.push(ch);
+        }
+
+        for(int i =0 ; i < k ; i++){
+            stk.pop(); // 끝에 남은 찌꺼기들 처리
         }
 
         StringBuilder sb = new StringBuilder();
-        for(int i =0 ; i < stk.size(); i++){
-            sb.append(stk.get(i));
+        for (int curr : stk) {
+            sb.append(curr);
         }
         System.out.println(sb);
 
