@@ -18,10 +18,14 @@ public class Main {
         }
 
     }
+
+    static boolean[] check = new boolean[10001];
+
     public static void main(String[] args){
         Scanner in = new Scanner(System.in);
         Main T = new Main();
 
+        StringBuilder sb = new StringBuilder();
         int n = in.nextInt();
         for(int i =0 ; i< n; i++){
             int asis = in.nextInt();
@@ -32,22 +36,21 @@ public class Main {
             answer = "" ;
 
             Queue<Data> queue = new LinkedList<>();
-            Set<Integer> set = new HashSet<>();
 
             queue.add(new Data(asis,""));
-            set.add(asis);
+            check[asis] = true;
 
-            //int L = 0 ;
             while(!queue.isEmpty()){
                 int size = queue.size();
                 for(int j =0; j< size ; j++){
                     Data data = queue.poll();
                     int aa = data.number;
                     String ans = data.answer;
-                    set.add(aa);
+
                     if( aa == tobe){
                         queue.clear();
-                        System.out.println( ans );
+                        sb.append(ans);
+                        sb.append("\n");
                         break;
                     }
 
@@ -56,25 +59,27 @@ public class Main {
                     int l = T.rotate(aa,true);
                     int r = T.rotate(aa, false);
 
-                    if( !set.contains(d)){
+                    if( !check[d]){
+                        check[d] = true;
                         queue.add(new Data(d, ans +"D"));
                     }
-                    if( !set.contains(s)){
+                    if( !check[s]){
+                        check[s] = true;
                         queue.add(new Data(s, ans+"S"));
                     }
-                    if( !set.contains(l)){
+                    if( !check[l]){
+                        check[l] = true;
                         queue.add(new Data(l, ans+"L"));
                     }
-                    if( !set.contains(r)){
+                    if( !check[r]){
+                        check[r] = true;
                         queue.add(new Data(r, ans+"R"));
                     }
                 } // for end
-                //L++;
             }
 
-            //System.out.println(L);
-            //System.out.println(answer);
         }
+        System.out.println(sb);
 
     }
 
