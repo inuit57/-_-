@@ -19,7 +19,6 @@ public class Main {
 
     }
 
-    static boolean[] check = new boolean[10001];
 
     public static void main(String[] args){
         Scanner in = new Scanner(System.in);
@@ -27,19 +26,17 @@ public class Main {
 
         StringBuilder sb = new StringBuilder();
         int n = in.nextInt();
+
         for(int i =0 ; i< n; i++){
             int asis = in.nextInt();
             tobe = in.nextInt();
 
-            // 초기화 수행
-            answerCnt = 10 ;
-            answer = "" ;
+            boolean[] check = new boolean[10001];
 
             Queue<Data> queue = new LinkedList<>();
 
             queue.add(new Data(asis,""));
             check[asis] = true;
-
             while(!queue.isEmpty()){
                 int size = queue.size();
                 for(int j =0; j< size ; j++){
