@@ -4,6 +4,11 @@ import java.util.Scanner;
 
 public class Main {
 
+
+    // visit 배열을 사용해서 방문 체크를 확실하게 하는 것으로 수정해봅시다.
+    // 그게 가장 확실하게 체크하는 방식이 되지 않을까 싶네요.
+
+
     public static void main(String[] args){
         Scanner in = new Scanner(System.in);
 
