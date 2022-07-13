@@ -8,6 +8,7 @@ public class Main {
     // visit 배열을 사용해서 방문 체크를 확실하게 하는 것으로 수정해봅시다.
     // 그게 가장 확실하게 체크하는 방식이 되지 않을까 싶네요.
 
+    // 한 줄씩 체크하도록 하고, visited[] 1차원 배열을 놓아서 처리하는 게 좋을 듯 합니다.
 
     public static void main(String[] args){
         Scanner in = new Scanner(System.in);
