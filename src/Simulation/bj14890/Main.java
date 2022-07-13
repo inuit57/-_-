@@ -35,8 +35,8 @@ public class Main {
                         row_flag = false;
                         break;
                     }else if( h < 0) {   // 오르막을 만나는 경우
-                        if (row_cnt >= L ) {
-                            row_cnt = 1;
+                        if (row_cnt >= L-1 ) {
+                            row_cnt -= L ;
                         } else {
                             row_flag = false;
                             break;
@@ -55,7 +55,7 @@ public class Main {
                             row_flag = false;
                             break;
                         }else{
-                            row_cnt = 1;
+                            row_cnt -= L ;
                             j--;
                         }
                     }
@@ -63,8 +63,8 @@ public class Main {
             }
             if( row_flag ){
                 answer ++;
-                System.out.println("map["+i+"][?]");
-                System.out.println(map[i][0]);
+//                System.out.println("map["+i+"][?]");
+//                System.out.println(map[i][0]);
             }
 
             for(int j=1; j< N ; j++){
@@ -77,8 +77,8 @@ public class Main {
                         col_flag = false;
                         break;
                     }else if( h < 0) {  // 오르막
-                        if (col_cnt >= L) {
-                            col_cnt = 1;
+                        if (col_cnt >= L-1 ) {
+                            col_cnt -= L  ;
                         } else {
                             col_flag = false;
                             break;
@@ -97,7 +97,7 @@ public class Main {
                             col_flag = false;
                             break;
                         }else{
-                            col_cnt = 1;
+                            col_cnt -= L ;
                             j--;
                         }
                     }
@@ -105,8 +105,8 @@ public class Main {
             }
             if( col_flag ){
                 answer ++;
-                System.out.println("map[?]["+i+"]");
-                System.out.println(map[0][i]);
+//                System.out.println("map[?]["+i+"]");
+//                System.out.println(map[0][i]);
             }
         }
 
