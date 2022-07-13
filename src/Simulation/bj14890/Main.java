@@ -23,9 +23,6 @@ public class Main {
             boolean row_flag = true;
             boolean col_flag = true;
 
-//            int direction = -1 ; // 0 : 내리막, 1 : 오르막
-            // 내리막 + 오르막이 된다면 그거는 불가능으로 취급한다.
-            // 다리를 중복으로 놓는 것을 방지하자.
 
             for(int j=1; j< N ; j++){
                 int h = map[i][j-1] - map[i][j];
@@ -57,13 +54,17 @@ public class Main {
                         if(row_cnt < L ){
                             row_flag = false;
                             break;
+                        }else{
+                            row_cnt = 1;
+                            j--;
                         }
                     }
                 }
             }
             if( row_flag ){
                 answer ++;
-//                System.out.println("map["+i+"][?]");
+                System.out.println("map["+i+"][?]");
+                System.out.println(map[i][0]);
             }
 
             for(int j=1; j< N ; j++){
@@ -95,17 +96,21 @@ public class Main {
                         if(col_cnt < L ){
                             col_flag = false;
                             break;
+                        }else{
+                            col_cnt = 1;
+                            j--;
                         }
                     }
                 }
             }
             if( col_flag ){
                 answer ++;
-               // System.out.println("map[?]["+i+"]");
+                System.out.println("map[?]["+i+"]");
+                System.out.println(map[0][i]);
             }
         }
 
-        System.out.println(answer - 1);
+        System.out.println(answer);
 
     }
 
