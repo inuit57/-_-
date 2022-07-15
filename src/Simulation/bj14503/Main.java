@@ -5,7 +5,14 @@ import java.util.Scanner;
 public class Main {
 
     static int[] px = {-1,0,1,0};
-    static int[] py = {0,-1,0,1};
+    static int[] py = {0,1,0,-1};
+
+    // 방향이 계속 헷갈린다.
+
+    // 북쪽  x= -1, y = 0, 북쪽(0)의 왼쪽은 서쪽(3)
+    // 동쪽  x = 0, y = 1, 동쪽(1)의 왼쪽은 북쪽(0)
+    // 남쪽  x = 1, y = 0, 남쪽(2)의 왼쪽은 동쪽(1)
+    // 서쪽  x = 0, y = -1, 서쪽(3)의 왼쪽은 남쪽(2)
 
     static int[][] board;
     static int n, m;
@@ -39,14 +46,14 @@ public class Main {
 
         System.out.println(cleanCount);
 
-//        for(int i=0; i< n; i++){
-//            for(int j=0 ; j< m ; j++){
-//                int info = board[i][j];
-//                if(info < 0) info = 0;
-//                System.out.printf("%4d ", info);
-//            }
-//            System.out.println();
-//        }
+        for(int i=0; i< n; i++){
+            for(int j=0 ; j< m ; j++){
+                int info = board[i][j];
+                if(info < 0) info = 0;
+                System.out.printf("%4d ", info);
+            }
+            System.out.println();
+        }
     }
 
 
@@ -71,7 +78,8 @@ public class Main {
 
         boolean isCleanable = false;
         for(int i =0 ; i< 4; i++){
-            newDir = (newDir+1)%4 ;
+            newDir = (newDir+3)%4 ;
+
             int dx = x + px[newDir] ;
             int dy = y + py[newDir] ;
             if( dx >= 0 && dy >= 0 && dx < n && dy < m && board[dx][dy] == 0){
