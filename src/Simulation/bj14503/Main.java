@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class Main {
 
-    static int[] px = {0,-1,0,1};
-    static int[] py = {1,0,-1,0};
+    static int[] px = {-1,0,1,0};
+    static int[] py = {0,-1,0,1};
 
     static int[][] board;
     static int n, m;
