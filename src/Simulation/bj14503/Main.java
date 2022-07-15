@@ -39,14 +39,14 @@ public class Main {
 
         System.out.println(cleanCount);
 
-        for(int i=0; i< n; i++){
-            for(int j=0 ; j< m ; j++){
-                int info = board[i][j];
-                if(info < 0) info = 0;
-                System.out.printf("%4d ", info);
-            }
-            System.out.println();
-        }
+//        for(int i=0; i< n; i++){
+//            for(int j=0 ; j< m ; j++){
+//                int info = board[i][j];
+//                if(info < 0) info = 0;
+//                System.out.printf("%4d ", info);
+//            }
+//            System.out.println();
+//        }
     }
 
 
@@ -57,9 +57,9 @@ public class Main {
             cleanCount++;
             board[x][y] = cleanCount;
 
-            if( cleanCount == 56 ){
-                System.out.println("here");
-            }
+//            if( cleanCount >= 57 ){
+//                System.out.println("here");
+//            }
         }
     }
 
@@ -95,6 +95,8 @@ public class Main {
                 }
                 solution(dx,dy,dir);
             }
+        }else{
+            isEnd = true;
         }
 
     }
