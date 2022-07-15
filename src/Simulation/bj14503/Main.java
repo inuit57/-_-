@@ -46,6 +46,10 @@ public class Main {
 
         System.out.println(cleanCount);
 
+//        printBoard();
+    }
+
+    private static void printBoard() {
         for(int i=0; i< n; i++){
             for(int j=0 ; j< m ; j++){
                 int info = board[i][j];
@@ -55,7 +59,6 @@ public class Main {
             System.out.println();
         }
     }
-
 
 
     private void clean(int x, int y, int dir){
@@ -87,9 +90,6 @@ public class Main {
                 isCleanable = true ;
                 if(isEnd) return;
             }
-            else{
-                continue;
-            }
         }
 
         if(!isCleanable){
@@ -97,14 +97,14 @@ public class Main {
             int dy = y- py[dir];
 
             if( dx >= 0 && dy >= 0 && dx < n && dy < m ){
-                if( board[dx][dy] == 1){
+                if( board[dx][dy] == -1){
                     isEnd = true;
                     return; // 벽을 만나면 종료
                 }
                 solution(dx,dy,dir);
+            }else{
+                isEnd = true;
             }
-        }else{
-            isEnd = true;
         }
 
     }
