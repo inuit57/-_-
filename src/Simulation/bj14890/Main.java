@@ -33,100 +33,24 @@ public class Main {
 
      */
 
+    static int[][] map;
+    static int N, L ;
+
     public static void main(String[] args){
         Scanner in = new Scanner(System.in);
 
-        int N = in.nextInt();
-        int L = in.nextInt();
+        N = in.nextInt();
+        L = in.nextInt();
 
         // 값 저장
-        int[][] map = new int[N][N];
+        map = new int[N][N];
         makeMap(in, N, map);
 
 
         int answer= 0;
         for(int i =0 ; i< N ; i++){
-
-            int row_cnt = 1;
-            int col_cnt = 1;
-
-            boolean row_flag = true;
-            boolean col_flag = true;
-
-
-            for(int j=1; j< N ; j++){
-                int h = map[i][j-1] - map[i][j];
-                if( h == 0 ){
-                    row_cnt ++;
-                    // 바로 전에 있는 항목과 같다면 +1
-                }else{
-                    // 높이 차이가 1보다 크다면
-                    if( Math.abs(h) > 1){
-                        row_flag = false;
-                        break;
-                    }else if( h < 0) {   // 오르막을 만나는 경우
-                        if (row_cnt >= L ) {
-                            row_cnt = 1 ;
-                        } else {
-                            row_flag = false;
-                            break;
-                        }
-                    }else{  // 내리막을 만나는 경우
-                        for(int k=1 ; k <= L ; k++){
-                            if( (j+k < N) &&  map[i][j+k-1] == map[i][j+k]){
-                                continue;
-                            }else {
-                                row_flag = false;
-                                j=N;
-                                break;
-                            }
-                        }
-                        j+=L ;
-                    }
-                }
-            }
-            if( row_flag ){
-                answer ++;
-                System.out.println("map["+i+"][?]");
-                System.out.println(map[i][0]);
-            }
-
-            for(int j=1; j< N ; j++){
-                if( i == 4 ){
-                    System.out.println("map[j][4] :" + map[j][4]);
-                }
-                int h = map[j-1][i] - map[j][i] ;
-                if( h == 0 ){
-                    col_cnt ++;
-                    // 바로 전의 항목과 같다면 +1
-                }else{
-                    if( Math.abs( h ) > 1 ){
-                        col_flag = false;
-                        break;
-                    }else if( h < 0) {  // 오르막
-                        if (col_cnt >= L) {
-                            col_cnt = 1 ;
-                        } else {
-                            break;
-                        }
-                    }else{  // 내리막
-
-                        for(int k=1 ; k <= L ; k++){
-                            if( (j+k < N) &&  map[j+k-1][i] == map[j+k][i]){
-                                continue;
-                            }else {
-                                break;
-                            }
-                        }
-                        j+=L ;
-                    }
-                }
-            }
-            if( col_flag ){
-                answer ++;
-                System.out.println("map[?]["+i+"]");
-                System.out.println(map[0][i]);
-            }
+            if( calRow(i) ) answer ++;
+            if( calCol(i) ) answer ++;
         }
 
         System.out.println(answer);
@@ -139,5 +63,55 @@ public class Main {
                 map[i][j] = in.nextInt();
             }
         }
+    }
+
+    public static boolean calRow(int row) {
+        boolean[] isIncline = new boolean[N]; //경사면 설치 여부를 확인하는 배열
+
+        for(int i = 0; i < N - 1; i++) {
+            int diff = map[row][i] - map[row][i + 1];
+
+            if(diff > 1 || diff < -1) return false; //높이차 1 초과하므로 false
+            else if(diff == -1) { // 다음 계단이 한 계단 높다
+                for(int j = 0; j < L; j++) { // 올라가는 경사로를 설치할 수 있는지 확인한다.
+                    if(i - j < 0 || isIncline[i - j]) return false;
+                    if(map[row][i] != map[row][i - j]) return false;
+                    isIncline[i - j]  = true; //경사면 설치
+                }
+            }
+            else if(diff == 1) { //다음 계단이 한 계단 낮다
+                for(int j = 1; j <= L; j++) { //내려가는 경사로를 설치할 수 있는지 확인한다.
+                    if(i + j >= N || isIncline[i + j]) return false;
+                    if(map[row][i] - 1 != map[row][i + j]) return false;
+                    isIncline[i + j] = true; //경사면 설치
+                }
+            }
+        }
+        return true;
+    }
+
+    public static boolean calCol(int col) {
+        boolean[] isIncline = new boolean[N]; //경사면 설치 여부를 확인하는 배열
+
+        for(int i = 0; i < N - 1; i++) {
+            int diff = map[i][col] - map[i + 1][col];
+
+            if(diff > 1 || diff < -1) return false; //높이차 1 초과하므로 false
+            else if(diff == -1) { // 다음 계단이 한 계단 높다
+                for(int j = 0; j < L; j++) { // 올라가는 경사로를 설치할 수 있는지 확인한다.
+                    if(i - j < 0 || isIncline[i - j]) return false;
+                    if(map[i][col] != map[i - j][col]) return false;
+                    isIncline[i - j]  = true; //경사면 설치
+                }
+            }
+            else if(diff == 1) { //다음 계단이 한 계단 낮다
+                for(int j = 1; j <= L; j++) { //내려가는 경사로를 설치할 수 있는지 확인한다.
+                    if(i + j >= N || isIncline[i + j]) return false;
+                    if(map[i][col] - 1 != map[i + j][col]) return false;
+                    isIncline[i + j] = true; //경사면 설치
+                }
+            }
+        }
+        return true;
     }
 }
