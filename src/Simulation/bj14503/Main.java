@@ -51,9 +51,11 @@ public class Main {
 
 
     private void clean(int x, int y, int dir){
-        // 현재 위치 청소
-        cleanCount ++;
-        board[x][y] = cleanCount;
+        if( board[x][y] == 0) {
+            // 현재 위치 청소
+            cleanCount++;
+            board[x][y] = cleanCount;
+        }
     }
 
     private void solution(int x, int y, int dir) {
