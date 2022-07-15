@@ -11,6 +11,7 @@ public class Main {
     static int n, m;
 
     static int cleanCount = 0 ;
+    static boolean isEnd = false;
 
     public static void main(String[] args){
         Scanner in = new Scanner(System.in);
@@ -55,10 +56,15 @@ public class Main {
             // 현재 위치 청소
             cleanCount++;
             board[x][y] = cleanCount;
+
+            if( cleanCount == 56 ){
+                System.out.println("here");
+            }
         }
     }
 
     private void solution(int x, int y, int dir) {
+        if(isEnd) return;
         clean(x,y,dir);
 
         int newDir = dir;
@@ -71,6 +77,7 @@ public class Main {
             if( dx >= 0 && dy >= 0 && dx < n && dy < m && board[dx][dy] == 0){
                 solution(dx,dy,newDir);
                 isCleanable = true ;
+                if(isEnd) return;
             }
             else{
                 continue;
@@ -82,10 +89,11 @@ public class Main {
             int dy = y- py[dir];
 
             if( dx >= 0 && dy >= 0 && dx < n && dy < m ){
-                if( board[dx][dy] == 1) return; // 벽을 만나면 종료
+                if( board[dx][dy] == 1){
+                    isEnd = true;
+                    return; // 벽을 만나면 종료
+                }
                 solution(dx,dy,dir);
-            }else{
-                return;
             }
         }
 
