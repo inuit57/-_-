@@ -8,6 +8,7 @@ public class Main {
 
     static int N ;
     static int[][] map ;
+    static Deque<Point> snake = new ArrayDeque<>();
 
     public static class Point{
         int x,y;
@@ -36,11 +37,11 @@ public class Main {
         for(int i =0 ; i< k ; i++){
             int x = in.nextInt();
             int y = in.nextInt();
-            map[y][x] = 1;
+            map[y-1][x-1] = 1;
         }
 
         int l = in.nextInt();
-        Deque<Point> snake = new ArrayDeque<>();
+
         snake.add(new Point(0,0));
         int dir = 0;
 
@@ -62,9 +63,6 @@ public class Main {
             char ch = in.next().charAt(0);
 
             for( ; answer < move ; answer++){
-                if( answer == 9){
-                    System.out.println(snake.getFirst());
-                }
                 if ( !isSafeMove(snake, dir)) return answer;
             }
             if( ch == 'L'){
@@ -83,13 +81,15 @@ public class Main {
      * @return 0 : 끝, 1 : 지속 가능
      */
     private static boolean isSafeMove(Deque<Point> snake, int dir) {
-        Point p = snake.getFirst();
+        Point p = snake.peekFirst();
         int dx = p.x + px[dir];
-        int dy = p.x + py[dir];
+        int dy = p.y + py[dir];
 
         if(isWall(dx, dy)) return false;
 
-        eatApple(snake, dx, dy);
+        if(!eatApple(snake, dx, dy)){
+            snake.removeLast(); // 끝 꼬리 줄임
+        }
         Point head = new Point(dx, dy);
         if( snake.contains(head)) return false;
 
@@ -98,12 +98,12 @@ public class Main {
         return true;
     }
 
-    private static void eatApple(Deque<Point> snake, int dx, int dy) {
+    private static boolean eatApple(Deque<Point> snake, int dx, int dy) {
         if(map[dy][dx] == 1) {  // 과일 먹음
             map[dy][dx] = 0;
-        }else{
-            snake.removeLast(); // 끝 꼬리 줄임
+            return true;
         }
+        return false;
     }
 
     private static boolean isWall(int dx, int dy) {
