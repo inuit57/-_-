@@ -11,7 +11,7 @@ public class Main {
     static int N ;
     static int[][] map ;
     static Deque<Point> snake = new ArrayDeque<>();
-
+    static int dir = 0;
     public static class Point{
         int x,y;
         Point(int x, int y){
@@ -45,45 +45,44 @@ public class Main {
         int l = in.nextInt();
 
         snake.add(new Point(0,0));
-        int dir = 0;
 
         int answer = 0;
 
         // input command ;
-        answer = getAnswer(in, l, snake, dir, answer);
+        answer = getAnswer(in, l, snake, answer);
 
-        System.out.println(snake.getFirst().x);
-        System.out.println(snake.getFirst().y);
+//        System.out.println(snake.getFirst().x);
+//        System.out.println(snake.getFirst().y);
+//
+//        System.out.println("dir : " + dir);
 
-        while(isSafeMove(snake, dir)){
+        while(isSafeMove(snake)){
             answer ++;
         }
 
-        System.out.println(answer);
+        System.out.println(answer+1);
     }
 
-    private static int getAnswer(Scanner in, int l, Deque<Point> snake, int dir, int answer) {
+    private static int getAnswer(Scanner in, int l, Deque<Point> snake, int answer) {
         for(int i = 0; i < l; i++) {
             int move = in.nextInt();
             char ch = in.next().charAt(0);
 
             for( ; answer < move ; answer++){
-                if ( !isSafeMove(snake, dir)) return answer;
+                if ( !isSafeMove(snake)) return answer;
             }
 
-            if( answer == move ){
-                System.out.println("answer : " + answer);
-                System.out.println(snake.getFirst().x);
-                System.out.println(snake.getFirst().y);
-            }
+//            if( answer == move ){
+//                System.out.println("answer : " + answer);
+//                System.out.println(snake.getFirst().x);
+//                System.out.println(snake.getFirst().y);
+//            }
 
             if( ch == 'D'){
                 dir = (dir +1)%4;
             }else {
                 dir = (dir +3)%4;
             }
-
-            System.out.println("dir : "+ dir);
         }
         return answer;
     }
@@ -91,21 +90,27 @@ public class Main {
     /**
      * 뱀 이동시키는 함수
      * @param snake : 뱀
-     * @param dir : 진행 방향
      * @return 0 : 끝, 1 : 지속 가능
      */
-    private static boolean isSafeMove(Deque<Point> snake, int dir) {
+    private static boolean isSafeMove(Deque<Point> snake) {
         Point p = snake.peekFirst();
         int dx = p.x + px[dir];
         int dy = p.y + py[dir];
 
-        if(isWall(dx, dy)) return false;
+        if(isWall(dx, dy)){
+            System.out.println("Wall!!");
+            return false;
+        }
+
+        Point head = new Point(dx, dy);
+        if( snake.contains(head)){
+            System.out.println("SNAKE!");
+            return false;
+        }
 
         if(!eatApple(snake, dx, dy)){
             snake.removeLast(); // 끝 꼬리 줄임
         }
-        Point head = new Point(dx, dy);
-        if( snake.contains(head)) return false;
 
         // 새로운 머리를 앞에 넣기
         snake.addFirst(head);
