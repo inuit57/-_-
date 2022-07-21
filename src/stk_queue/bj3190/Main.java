@@ -1,10 +1,12 @@
 package stk_queue.bj3190;
 
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Scanner;
 
 public class Main {
+
 
     static int N ;
     static int[][] map ;
@@ -50,6 +52,9 @@ public class Main {
         // input command ;
         answer = getAnswer(in, l, snake, dir, answer);
 
+        System.out.println(snake.getFirst().x);
+        System.out.println(snake.getFirst().y);
+
         while(isSafeMove(snake, dir)){
             answer ++;
         }
@@ -65,11 +70,20 @@ public class Main {
             for( ; answer < move ; answer++){
                 if ( !isSafeMove(snake, dir)) return answer;
             }
-            if( ch == 'L'){
-                dir = (dir +3)%4;
-            }else{
-                dir = (dir +1)%4;
+
+            if( answer == move ){
+                System.out.println("answer : " + answer);
+                System.out.println(snake.getFirst().x);
+                System.out.println(snake.getFirst().y);
             }
+
+            if( ch == 'D'){
+                dir = (dir +1)%4;
+            }else {
+                dir = (dir +3)%4;
+            }
+
+            System.out.println("dir : "+ dir);
         }
         return answer;
     }
