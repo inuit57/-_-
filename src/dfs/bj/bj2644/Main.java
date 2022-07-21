@@ -37,11 +37,13 @@ public class Main {
             // 각 사람의 부모가 하나니까.
         }
 
+
+
         int index = 1;
         int child = start;
         while(treeMap.containsKey(child)){
             int parent = treeMap.get(child);
-            pp[parent] =index;
+            pp[parent] = index;
             child = parent;
             index ++; // 촌수 증가
         }
@@ -55,7 +57,11 @@ public class Main {
                 answer = pp[parent] + index;
                 break;
             }
-            pp[parent] =index;
+            if( parent == start ){
+                answer = index;
+                break;
+            }
+            pp[parent] = index;
             child = parent;
             index ++; // 촌수 증가
         }
