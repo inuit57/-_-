@@ -22,6 +22,11 @@ public class Main {
         int start = in.nextInt();
         int end = in.nextInt();
 
+        if( start == end ){
+            System.out.println(0);
+            return;
+        }
+
         int k = in.nextInt(); // 입력 받기 시작
         // 부모 자식 순서로 입력된다.
         // 이것을 어떻게 저장할지를 좀 고민해야 한다.
