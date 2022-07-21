@@ -12,11 +12,21 @@ public class Main {
     static int[][] map ;
     static Deque<Point> snake = new ArrayDeque<>();
     static int dir = 0;
+
     public static class Point{
         int x,y;
         Point(int x, int y){
             this.x = x;
             this.y = y;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if( obj instanceof Point ) {
+                Point p = (Point) obj;
+                return this.x == p.x && this.y == p.y;
+            }
+            return false;
         }
     }
 
@@ -98,13 +108,13 @@ public class Main {
         int dy = p.y + py[dir];
 
         if(isWall(dx, dy)){
-            System.out.println("Wall!!");
+//            System.out.println("Wall!!");
             return false;
         }
 
         Point head = new Point(dx, dy);
         if( snake.contains(head)){
-            System.out.println("SNAKE!");
+//            System.out.println("SNAKE!");
             return false;
         }
 
@@ -118,8 +128,8 @@ public class Main {
     }
 
     private static boolean eatApple(Deque<Point> snake, int dx, int dy) {
-        if(map[dy][dx] == 1) {  // 과일 먹음
-            map[dy][dx] = 0;
+        if(map[dx][dy] == 1) {  // 과일 먹음
+            map[dx][dy] = 0;
             return true;
         }
         return false;
