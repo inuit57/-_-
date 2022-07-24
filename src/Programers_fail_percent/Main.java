@@ -1,9 +1,7 @@
 package Programers_fail_percent;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -20,59 +18,54 @@ public class Main {
 
     }
 
-    class StageInfo{
-        int stageNo ;
-        int fail_per ;
+    static class Rate{
+        int idx;	// stage number
+        double rate; 	// fail rate
 
-        StageInfo(int stageNo, double fail_per){
-            this.stageNo = stageNo;
-            this.fail_per = (int)(fail_per *1000);
+        public Rate(int idx, double rate) {
+            this.idx = idx;
+            this.rate = rate;
         }
     }
 
-    public int[] solution(int N, int[] stages) {
+    public static int[] solution(int N, int[] stages) {
 
-        // 1 ~ N 까지만 검사할 예정
-        // N+1 : 다 깬 놈도 그냥 처리하려고 N+2 로 설정
-        int[] notClears = new int[N+2];
 
-        int totUser = stages.length; // 전체 사람수
+        int[] user_cnt = new int[N + 2];	// 각 stage에 머물러있는 user 수
+        int[] user_total_cnt = new int[N + 1];	// 각 stage에 도달한 전체 user 수
 
-        for(int stage: stages){
-            notClears[stage]++;
+        for (int i = 0; i < stages.length; i++) {
+            user_cnt[stages[i]]++;
         }
 
-        // 실패율 계산
-        // notClears[i] / (totUser - notClears[i])
-        // 깬 놈들은 저 배열에 기록되지 않는다.
-
-        // https://school.programmers.co.kr/learn/courses/30/lessons/42889
-
-        // 이거를 이제 어떻게 이쁘게 가공해서 정렬할까 라는 거지.
-        List<StageInfo> stageInfoList = new ArrayList<>();
-        for(int i=1; i<= N; i++){
-            int real_tot = totUser;
-            for(int j=1; j< i; j++){
-                real_tot -= notClears[j];  // 이 단계까지 오지 못한 사람들 빼주기
-            }
-            double failPercent = (double)(notClears[i]) / real_tot ;
-            stageInfoList.add(new StageInfo(i,failPercent));
+        // 스테이지에 도달한 유저 수 누적(?)하여 구하기
+        // 맨 마지막 stage는 n번째 + (n+1)번째
+        user_total_cnt[N] = user_cnt[N] + user_cnt[N + 1];
+        for (int i = N-1; i >= 1; i--) {
+            user_total_cnt[i] = user_cnt[i] + user_total_cnt[i + 1];
         }
 
-        stageInfoList.sort(new Comparator<StageInfo>() {
-            @Override
-            public int compare(StageInfo o1, StageInfo o2) {
-                if( o1.fail_per == o2.fail_per){
-                    return o1.stageNo - o2.stageNo    ;
-                }else{
-                    return o2.fail_per - o1.fail_per  ;
-                }
+        ArrayList<Rate> arr = new ArrayList<>(); // stage 번호와 실패율을 저장
+        for (int i = 1; i <= N; i++) {
+
+            if(user_total_cnt[i]==0){ //스테이지에 도달한 유저가 없는 경우 해당 스테이지의 실패율은 0
+                arr.add(new Rate(i, 0));
+                continue;
             }
-        });
 
+            double rate = (double) user_cnt[i] / user_total_cnt[i];
+            arr.add(new Rate(i, rate));
+        }
 
+        // fail rate가 높은 순으로 sorting
+        Collections.sort(arr, ((o1, o2) -> Double.compare(o2.rate, o1.rate)));
 
-        int[] answer = stageInfoList.stream().mapToInt(stageInfo -> stageInfo.stageNo).toArray();
+        // sorting 된 실패율의 stage 번호 저장
+        int[] answer = new int[N];
+        for (int i=0; i<arr.size(); i++) {
+            answer[i] = arr.get(i).idx;
+        }
+
         return answer;
     }
 
