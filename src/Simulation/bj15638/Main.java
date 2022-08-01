@@ -59,7 +59,7 @@ public class Main {
         // 모든 경우의 수를 조합으로 만들어서 저장하고
         // 그 조합을 모두 테스트하는 방법?
 
-
+        // 나중에 더 풀어보자.
 
         for (Point point : pList) {
             if( point.cctvNo == 1){
