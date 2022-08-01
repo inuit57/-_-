@@ -49,6 +49,8 @@ public class Main {
     }
 
     private static void dfs(int curr , int sum , int before){
+        if( sum > answer) return; // 가능성이 없는 것은 일찌감치 쳐내자.
+
         if( curr == N){
             //  결과 값 연산
             answer = Math.min(answer,sum);
