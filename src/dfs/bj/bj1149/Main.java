@@ -9,8 +9,7 @@ import java.util.Scanner;
  */
 
 // 시간 초과가 나온다. 더 빠른 방법이 필요.
-    // 값을 기록하는 쪽으로 접근해보자.
-    // 점화식을 다시 좀 잘 생각해서 짜봐야 할 듯 합니다.
+    // DFS 부분 코드를 지우지 않아서 틀렸었네요.
 public class Main {
 
     static int N ;
@@ -34,9 +33,9 @@ public class Main {
             }
         }
 
-        for(int i = 0; i< 3; i++){
-            dfs(1, arr[0][i], i);
-        }
+//        for(int i = 0; i< 3; i++){
+//            dfs(1, arr[0][i], i);
+//        }
 
 //        System.out.println(answer);
 
@@ -64,16 +63,16 @@ public class Main {
 
         for(int i=1; i< N; i++){
 
-            minValues[i][0] = arr[i][0] + Math.min(minValues[i-1][1], minValues[i-1][2]);
-            minValues[i][1] = arr[i][1] + Math.min(minValues[i-1][0], minValues[i-1][2]);
-            minValues[i][2] = arr[i][2] + Math.min(minValues[i-1][0], minValues[i-1][1]);
-//            for(int j=0; j< 3; j++){
-//                for(int k=0; k< 3; k++){
-//                    if( j != k ){
-//                        minValues[i][j] = Math.min(minValues[i][j], minValues[i-1][k]+arr[i][j]);
-//                    }
-//                }
-//            }
+//            minValues[i][0] = arr[i][0] + Math.min(minValues[i-1][1], minValues[i-1][2]);
+//            minValues[i][1] = arr[i][1] + Math.min(minValues[i-1][0], minValues[i-1][2]);
+//            minValues[i][2] = arr[i][2] + Math.min(minValues[i-1][0], minValues[i-1][1]);
+            for(int j=0; j< 3; j++){
+                for(int k=0; k< 3; k++){
+                    if( j != k ){
+                        minValues[i][j] = Math.min(minValues[i][j], minValues[i-1][k]+arr[i][j]);
+                    }
+                }
+            }
         }
 
        return Arrays.stream(minValues[N-1]).min().getAsInt();
