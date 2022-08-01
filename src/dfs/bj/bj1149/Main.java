@@ -7,6 +7,7 @@ import java.util.Scanner;
  *
  */
 
+// 시간 초과가 나온다. 더 빠른 방법이 필요.
 public class Main {
 
     static int N ;
