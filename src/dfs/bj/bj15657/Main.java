@@ -7,14 +7,19 @@ public class Main {
 
     static int N,M;
     static int[] arr ;
+    static boolean[] visit ;
     static StringBuilder sb = new StringBuilder();
+    static int[] resultArray;
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
+        Main T = new Main();
 
         N = in.nextInt();
         M = in.nextInt();
         arr = new int[N];
+        visit = new boolean[N];
+        resultArray = new int[M];
 
         for(int i =0; i<N ; i++){
             arr[i] = in.nextInt();
@@ -27,24 +32,34 @@ public class Main {
         // 출력도 제때 제때 해줘야 하고 말이지
         // 출력양이 길어질 수도 있으니까 StringBuilder 를 쓰는 것이 좋을 듯.
 
-        answer(0,0  );
+        T.DFS(0);
 
         System.out.println(sb.toString());
 
         in.close();
     }
 
-    private static void answer( int curr, int count   ){
-        if( curr >= N) return;
-
-        if( count == M){
+    private void DFS(int depth) {
+        if (depth == M) {
+            for(int x : resultArray){
+                sb.append(x);
+                sb.append(" ");
+            }
             sb.append("\n");
             return;
         }
-        sb.append(arr[curr]);
-        sb.append(" ");
-
-        answer(curr, count+1 ); // 현재 위치를 다시 선택하는 경우
-        answer(curr+1, count  ); // 현재 위치를 선택하지 않는 경우
+        for(int i =0 ; i< N ;i++){
+            // 앞보다 더 작은 경우 건너뛰기
+            if( depth > 0  && resultArray[depth-1] > arr[i]) continue;
+            if(!visit[i]) {
+                visit[i] = true;
+                resultArray[depth] = arr[i];
+                DFS(depth + 1);
+                visit[i] = false;
+            }else{
+                resultArray[depth] = arr[i]; // 중복순열용
+                DFS(depth+1);
+            }
+        }
     }
 }
