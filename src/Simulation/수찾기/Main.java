@@ -23,7 +23,7 @@ public class Main {
             } else {
                 sb.append(0);
             }
-            sb.append("\n");
+            sb.append(" ");
         }
 
         System.out.println(sb);
