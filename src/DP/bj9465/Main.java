@@ -22,20 +22,25 @@ public class Main {
             }
             // 테스트 케이스 입력 끝
 
-            sb.append(T.solution(arr));
+            sb.append(T.solution(arr,n));
             sb.append("\n");
         }
 
         System.out.println(sb);
     }
 
-    public int solution(int[][] arr){
-        int n = arr[0].length;  // 길이 계산
+    public int solution(int[][] arr, int n){
         int[][] chk = new int[2][n]; // DP 계산용 배열
 
         // 초깃값 세팅
         chk[0][0] = arr[0][0] ;
         chk[1][0] = arr[1][0] ;
+
+        if( n < 2 ) {
+            return Math.max(chk[0][0] ,chk[1][0] );
+        }
+
+
         chk[0][1] = arr[0][1] + chk[1][0] ;
         chk[1][1] = arr[1][1] + chk[0][0] ;
 
