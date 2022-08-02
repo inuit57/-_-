@@ -61,16 +61,17 @@ public class Main {
         }
         for(int i =0 ; i< N ;i++){
             // 앞보다 더 작은 경우 건너뛰기
-            if( depth > 0  && resultArray[depth-1] > arr[i]) continue;
+//            if( depth > 0  && resultArray[depth-1] > arr[i]) continue;
             if(!visit[i]) {
                 visit[i] = true;
                 resultArray[depth] = arr[i];
                 DFS(depth + 1);
                 visit[i] = false;
-            }else{
-                resultArray[depth] = arr[i]; // 중복순열용
-                DFS(depth+1);
             }
+//            else{
+//                resultArray[depth] = arr[i]; // 중복순열용
+//                DFS(depth+1);
+//            }
         }
     }
 }
