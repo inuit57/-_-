@@ -1,7 +1,6 @@
 package dfs.bj.bj15657;
 
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -21,6 +20,7 @@ public class Main {
         visit = new boolean[N];
         resultArray = new int[M];
 
+
         for(int i =0; i<N ; i++){
             arr[i] = in.nextInt();
         }
@@ -33,19 +33,30 @@ public class Main {
         // 출력양이 길어질 수도 있으니까 StringBuilder 를 쓰는 것이 좋을 듯.
 
         T.DFS(0);
+        for(String str : strSet){
+            sb.append(str);
+        }
 
         System.out.println(sb.toString());
 
         in.close();
     }
 
+    // 순서 지정이 필요하다.
+    static LinkedHashSet<String> strSet = new LinkedHashSet<>();
+
     private void DFS(int depth) {
         if (depth == M) {
+            StringBuilder sbl = new StringBuilder();
             for(int x : resultArray){
-                sb.append(x);
-                sb.append(" ");
+//                sb.append(x);
+//                sb.append(" ");
+                sbl.append(x);
+                sbl.append(" ");
             }
-            sb.append("\n");
+//            sb.append("\n");
+            sbl.append("\n");
+            strSet.add(sbl.toString());
             return;
         }
         for(int i =0 ; i< N ;i++){
