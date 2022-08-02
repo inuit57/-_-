@@ -18,12 +18,12 @@ public class Main {
         StringBuilder sb = new StringBuilder();
         int M = in.nextInt();
         for (int i = 0; i < M; i++) {
-            if (!set.add(in.nextInt())) {
+            if (set.contains(in.nextInt())) {
                 sb.append(1);
             } else {
                 sb.append(0);
             }
-            sb.append(" ");
+            sb.append("\n");
         }
 
         System.out.println(sb);
