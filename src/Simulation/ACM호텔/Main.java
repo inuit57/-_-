@@ -14,10 +14,12 @@ public class Main {
             int W = in.nextInt(); // 방수
             int N = in.nextInt(); // 몇 번째 손님
 
+            int answer = N/H ;
             int h = N%H ;
-            if( h == 0) h = H;
+            if( h > 0) answer ++;
+            else h = H;
             sb.append(h);
-            int answer = N/H + 1;
+
             if( answer < 10) sb.append(0);
             sb.append(answer);
             sb.append("\n");
