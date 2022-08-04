@@ -9,7 +9,10 @@ public class Main {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 //        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
-        PriorityQueue<Integer> pq = new PriorityQueue<>();
+//        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        PriorityQueue<Integer> pq = new PriorityQueue<>(
+                (o1, o2) -> Math.abs(o1) == Math.abs(o2) ? o1 - o2 : Math.abs(o1) - Math.abs(o2)
+        );
 
         int N = in.nextInt();
         StringBuilder sb = new StringBuilder();
