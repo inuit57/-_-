@@ -21,6 +21,7 @@ public class Main {
         int[] visit = new int[100001];
         Queue<Integer> queue = new LinkedList<>();
 
+        Arrays.fill(visit,-1);
         queue.add(start);
         visit[start] = start;
 
@@ -33,12 +34,10 @@ public class Main {
                     StringBuilder sb = new StringBuilder();
 
                     ArrayList<Integer> arr = new ArrayList<>();
-                    int before = visit[obj];
-                    arr.add(obj);
-                    arr.add(before);
-                    while( visit[before] != start){
-                        before = visit[before];
+                    int before = obj ;
+                    while( before != start){
                         arr.add(before);
+                        before = visit[before];
                     }
                     arr.add(start);
 
@@ -54,18 +53,20 @@ public class Main {
                     return answer;
                 }
 
-                int next = curr-1;
-                if( next >= 0 &&  visit[next] == 0  ){
+                int next = curr*2 ;
+                if( next <= 100000 &&  visit[next] == -1 ){
                     queue.add(next);
                     visit[next] = curr;
                 }
+
                 next = curr +1;
-                if( next <= 100000 && visit[next] == 0 ){
+                if( next <= 100000 &&  visit[next] == -1 ){
                     queue.add(next);
                     visit[next] = curr;
                 }
-                next = curr*2 ;
-                if( next <= 100000 &&  visit[next] == 0 ){
+
+                next = curr-1;
+                if( next >= 0 &&  visit[next] == -1  ){
                     queue.add(next);
                     visit[next] = curr;
                 }
