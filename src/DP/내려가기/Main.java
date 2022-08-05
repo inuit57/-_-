@@ -1,0 +1,55 @@
+package DP.내려가기;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args){
+        Scanner in = new Scanner(System.in);
+        Main T = new Main();
+
+        int n = in.nextInt();
+        int[][] arr = new int[n][3] ;
+        for(int i =0 ; i< n; i++){
+            for(int j =0 ; j< 3; j++){
+                arr[i][j] = in.nextInt();
+            }
+        }
+
+        ArrayList<Integer> answer = T.solution(arr, n);
+        StringBuilder sb = new StringBuilder();
+        sb.append(answer.get(0));
+        sb.append(" ");
+        sb.append(answer.get(1));
+        System.out.println(sb);
+    }
+
+    public ArrayList<Integer> solution(int[][] arr, int n){
+        int[][] minDp = new int[2][3];
+        int[][] maxDp = new int[2][3];
+
+        for(int i=0; i< 3; i++){
+            maxDp[0][i] = minDp[0][i] = arr[0][i];
+        }
+
+        int curr = 1;
+        for(int i=1; i< n; i++){
+            curr = i%2;
+            minDp[curr][0] = Math.min(minDp[1-curr][0],minDp[1-curr][1]) + arr[i][0];
+            maxDp[curr][0] = Math.max(maxDp[1-curr][0],maxDp[1-curr][1]) + arr[i][0];
+
+            minDp[curr][1] = Arrays.stream(minDp[1-curr]).min().getAsInt() + arr[i][1];
+            maxDp[curr][1] = Arrays.stream(maxDp[1-curr]).max().getAsInt() + arr[i][1];
+
+            minDp[curr][2] = Math.min(minDp[1-curr][2],minDp[1-curr][1]) + arr[i][2];
+            maxDp[curr][2] = Math.max(maxDp[1-curr][2],maxDp[1-curr][1]) + arr[i][2];
+        }
+
+        ArrayList<Integer> answer = new ArrayList<>();
+        answer.add( Arrays.stream(maxDp[curr]).max().getAsInt());
+        answer.add( Arrays.stream(minDp[curr]).min().getAsInt());
+
+        return answer;
+    }
+}
