@@ -25,11 +25,7 @@ public class Main {
         }
 
         ArrayList<Integer> answer = T.solution(arr, n);
-        StringBuilder sb = new StringBuilder();
-        sb.append(answer.get(0));
-        sb.append(" ");
-        sb.append(answer.get(1));
-        System.out.println(sb);
+        System.out.println(answer.get(0) + " " + answer.get(1));
     }
 
     public ArrayList<Integer> solution(int[][] arr, int n){
@@ -40,22 +36,22 @@ public class Main {
             maxDp[0][i] = minDp[0][i] = arr[0][i];
         }
 
-        int curr = 1;
+        int curr = 0; // n = 1 일 때 대비
         for(int i=1; i< n; i++){
             curr = i%2;
             minDp[curr][0] = Math.min(minDp[1-curr][0],minDp[1-curr][1]) + arr[i][0];
             maxDp[curr][0] = Math.max(maxDp[1-curr][0],maxDp[1-curr][1]) + arr[i][0];
 
-            minDp[curr][1] = Arrays.stream(minDp[1-curr]).min().getAsInt() + arr[i][1];
-            maxDp[curr][1] = Arrays.stream(maxDp[1-curr]).max().getAsInt() + arr[i][1];
+            minDp[curr][1] = Arrays.stream(minDp[1-curr]).min().orElse(0) + arr[i][1];
+            maxDp[curr][1] = Arrays.stream(maxDp[1-curr]).max().orElse(0) + arr[i][1];
 
             minDp[curr][2] = Math.min(minDp[1-curr][2],minDp[1-curr][1]) + arr[i][2];
             maxDp[curr][2] = Math.max(maxDp[1-curr][2],maxDp[1-curr][1]) + arr[i][2];
         }
 
         ArrayList<Integer> answer = new ArrayList<>();
-        answer.add( Arrays.stream(maxDp[curr]).max().getAsInt());
-        answer.add( Arrays.stream(minDp[curr]).min().getAsInt());
+        answer.add( Arrays.stream(maxDp[curr]).max().orElse(0) );
+        answer.add( Arrays.stream(minDp[curr]).min().orElse(0) );
 
         return answer;
     }
