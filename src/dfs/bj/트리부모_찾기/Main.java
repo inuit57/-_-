@@ -1,61 +1,48 @@
 package dfs.bj.트리부모_찾기;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Main {
-    static HashMap<Integer,Integer> tree = new HashMap<>();
-    public static void main(String[] args){
-        Scanner in = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(br.readLine());
+        int i, j;
 
-        int n = in.nextInt();
-        int[][] arr = new int[n+1][n+1];
-
-        arr[1][1] = 1;
-        tree.put(1,1);
-
-        for(int i= 0; i< n-1 ; i++){
-            int num1 = in.nextInt();
-            int num2 = in.nextInt();
-            arr[num1][num2] = 1;
-            arr[num2][num1] = 1;
+        // 연결 정보
+        ArrayList<Integer>[] list = new ArrayList[n+1];
+        // 초기화
+        for(i=1; i<=n; i++) {
+            list[i] = new ArrayList<Integer>();
         }
 
-
-
-        ArrayList<Integer> list = new ArrayList<>();
-        for(int next = 2; next<= n ; next++){
-            if( arr[1][next] == 1 ){
-                tree.put(next, 1);
-                list.add(next);
-            }
+        // 연결
+        for(i=0; i<n-1; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            list[a].add(b);
+            list[b].add(a);
         }
 
-        findParent(n, arr,  list);
+        // 결과 값(부모값)
+        // 예: parents[i] = j (i의 부모 : j)
+        int[] parents = new int[n+1];
 
-        for(int i =2 ; i<= n ; i++){
-            System.out.println(tree.get(i));
-        }
+        // dfs
+        dfs(list, parents, n, 1, 0);
+
+        // 결과 출력
+        for(j=2;j<=n; j++) System.out.println(parents[j]);
     }
 
-    private static void findParent(int n, int[][] arr, ArrayList<Integer> list) {
-        if( tree.size() == n ) return;
-
-        ArrayList<Integer> nextList = new ArrayList<>();
-        for(int num : list){
-            for(int next = 2; next <= n; next++){
-                if(arr[num][next] == 1){
-                    if( tree.get(next) == null ) {
-                        tree.put(next, num);
-                        nextList.add(next);
-                    }
-                }
-            }
-        }
-
-        if( tree.size() < n ){
-            findParent(n,arr, nextList);
+    private static void dfs(ArrayList<Integer>[] list, int[] parents, int n, int start, int parent) {
+        parents[start] = parent;
+        for(int item : list[start]) {
+            if(item != parent) dfs(list, parents, n, item, start);
         }
     }
 
