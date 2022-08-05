@@ -1,19 +1,26 @@
 package DP.내려가기;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args){
-        Scanner in = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         Main T = new Main();
 
-        int n = in.nextInt();
+        int n = Integer.parseInt(br.readLine());
         int[][] arr = new int[n][3] ;
+
         for(int i =0 ; i< n; i++){
+            StringTokenizer st = new StringTokenizer(br.readLine());
             for(int j =0 ; j< 3; j++){
-                arr[i][j] = in.nextInt();
+                String s = st.nextToken();
+                arr[i][j] = Integer.parseInt(s);
             }
         }
 
