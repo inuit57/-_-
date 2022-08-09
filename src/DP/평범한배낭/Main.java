@@ -30,6 +30,8 @@ public class Main {
         // dp[n][w] = Math.max(dp[n-1][w] ,
         //                     dp[n-1][w-items[i].weight]+items[i].value)
 
+        // 가능한 무게에 대해서 모든 항목을
+        // 한 번씩 집어넣는 식으로 처리하는 것이 답이 되었네요.
         for(int i=1; i<=n; i++){
             for(int j=1; j<= k; j++) {
                 if( j >= items[i].weight){
