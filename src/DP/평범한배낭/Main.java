@@ -18,32 +18,25 @@ public class Main {
         dp = new int[n+1][k+1] ;
 
 
-        ArrayList<Item> items = new ArrayList<>();
-        visit = new boolean[items.size()];
+        Item[] items = new Item[n+1];
 
-        for(int i =0 ; i<n; i++){
+        for(int i =1 ; i<=n; i++){
             int weight = in.nextInt();
             int value =in.nextInt();
-            if( weight > k) continue; // 무게가 초과하는 것들은 아예 빼버리자
-            dp[1][weight] = value; // 초깃값 설정(1개만 들어갔을 때)
-            items.add(new Item(weight,value));
+            items[i] = new Item(weight,value);
         }
 
 
         // dp[n][w] = Math.max(dp[n-1][w] ,
         //                     dp[n-1][w-items[i].weight]+items[i].value)
 
-        for(int i=2; i<=n; i++){
-            for(int j=0; j<= k; j++) {
-                for(int k=0; k< items.size(); k++) {
-                    Item curr = items.get(k);
-                    if( j < curr.weight) dp[i][j] = dp[i-1][j];
-                    else {
-                        int max = Math.max(dp[i - 1][j],
-                                dp[i - 1][j - curr.weight] + curr.value
-                        );
-                        dp[i][j] = Math.max(max, dp[i][j]);
-                    }
+        for(int i=1; i<=n; i++){
+            for(int j=1; j<= k; j++) {
+                if( j >= items[i].weight){
+                    dp[i][j] = Math.max(dp[i-1][j],
+                            dp[i-1][j-items[i].weight]+items[i].value);
+                }else{
+                    dp[i][j] = dp[i-1][j] ;
                 }
             }
         }
