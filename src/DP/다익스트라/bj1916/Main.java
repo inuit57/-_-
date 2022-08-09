@@ -7,28 +7,28 @@ import java.util.*;
 
 public class Main {
 
+    static int busNum, cityNum ;
+
+    static List<List<Node>> board = new ArrayList<>();
+    static int[] result ;
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        int cityNum = Integer.parseInt(br.readLine());
-        int busNum = Integer.parseInt(br.readLine());
+        cityNum = Integer.parseInt(br.readLine());
+        busNum = Integer.parseInt(br.readLine());
 
-        int[][] map = new int[cityNum][cityNum];
-
-        Arrays.fill(map, Integer.MAX_VALUE);
-        for(int i=0; i< cityNum ; i++){
-            map[i][i] = 0;
+        // board 초기화
+        for(int i=0; i< cityNum; i++){
+            board.add(new ArrayList<>());
         }
 
-        ArrayList<ArrayList<Node>> board = new ArrayList<>();
 
         for(int i=0; i< busNum; i++){
             StringTokenizer st = new StringTokenizer(br.readLine()," ");
-            int start = Integer.parseInt(st.nextToken()) -1;
-            int end = Integer.parseInt(st.nextToken()) -1;
+            int start = Integer.parseInt(st.nextToken())-1 ;
+            int end = Integer.parseInt(st.nextToken())-1 ;
             int weight = Integer.parseInt(st.nextToken()) ;
-            map[start][end] = weight ;
-            map[end][start] = weight ;
 
             board.get(start).add(new Node(end,weight));
             board.get(end).add(new Node(start,weight));
@@ -39,27 +39,47 @@ public class Main {
         int endPoint = Integer.parseInt(st.nextToken()) -1;
 
 
-        dijkstra(cityNum, startPoint);
+        dijkstra(startPoint);
+
+        for(int i=0; i< cityNum ; i++){
+            System.out.println((i+1)+":" + result[i]);
+        }
+        System.out.println(result[endPoint]);
     }
 
     // https://codingnojam.tistory.com/46
     // 여기 글을 좀 참고해서 만들어보자.
-    private static void dijkstra(int cityNum, int startPoint) {
-        int[] dist = new int[cityNum];
+    private static void dijkstra(int startPoint) {
+
         PriorityQueue<Node> pq = new PriorityQueue<>((o1, o2) -> o1.distance - o2.distance);
 
-        Arrays.fill(dist, Integer.MAX_VALUE);
-        dist[startPoint] = 0;
+        result = new int[cityNum];
+        Arrays.fill(result, Integer.MAX_VALUE);
+        result[startPoint] = 0;
 
-        for(int a = 0; a < cityNum -1; a++){
-            int min = Integer.MAX_VALUE;
-            int min_idx = -1;
+        pq.offer(new Node(startPoint,0));
+        while (!pq.isEmpty()){
+            Node node = pq.poll();
 
-            // 노드 최솟값 찾기
-            for(int i = 0; i< cityNum; i++){
+            int currIdx = node.index;
+            int currDist = node.distance;
 
+            // 큐에서 꺼낸 거리와 최단거리 테이블의 거리를 비교.
+            // 만약 꺼낸 거리가 더 크다면 굳이 방문할 필요가 없다.
+            if( currDist > result[currIdx]){
+                continue;
+            }
+
+            for(Node linkedNode : board.get(currIdx)){
+                if(currDist + linkedNode.distance < result[linkedNode.index]) {
+                    // if 문의 조건을 만족했다면 최단거리테이블의 값을 갱신합니다.
+                    result[linkedNode.index] = currDist + linkedNode.distance;
+                    // 갱신 된 노드를 우선순위 큐에 넣어줍니다.
+                    pq.offer(new Node(linkedNode.index, result[linkedNode.index]));
+                }
             }
         }
+
     }
 
     static class Node{
