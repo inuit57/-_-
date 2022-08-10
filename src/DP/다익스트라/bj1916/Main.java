@@ -35,9 +35,9 @@ public class Main {
             // 단방향 연결 그래프였었네요.
         }
 
-        for(Node n : board.get(0)){
-            System.out.println(n.index +":"+n.distance);
-        }
+//        for(Node n : board.get(0)){
+//            System.out.println(n.index +":"+n.distance);
+//        }
 
         StringTokenizer st = new StringTokenizer(br.readLine()," ");
         int startPoint = Integer.parseInt(st.nextToken()) -1;
@@ -46,9 +46,9 @@ public class Main {
 
         dijkstra(startPoint);
 
-        for(int i=0; i< cityNum ; i++){
-            System.out.println((i+1)+":" + result[i]);
-        }
+//        for(int i=0; i< cityNum ; i++){
+//            System.out.println((i+1)+":" + result[i]);
+//        }
         System.out.println(result[endPoint]);
     }
 
@@ -79,7 +79,7 @@ public class Main {
                 if(currDist + linkedNode.distance < result[linkedNode.index]) {
                     // if 문의 조건을 만족했다면 최단거리테이블의 값을 갱신합니다.
                     result[linkedNode.index] = currDist + linkedNode.distance;
-                    System.out.println( currIdx +" to " + linkedNode.index + ":" + result[linkedNode.index]);
+//                    System.out.println( currIdx +" to " + linkedNode.index + ":" + result[linkedNode.index]);
                     // 갱신 된 노드를 우선순위 큐에 넣어줍니다.
                     pq.offer(new Node(linkedNode.index, result[linkedNode.index]));
                 }
