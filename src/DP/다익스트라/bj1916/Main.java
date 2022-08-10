@@ -31,7 +31,12 @@ public class Main {
             int weight = Integer.parseInt(st.nextToken()) ;
 
             board.get(start).add(new Node(end,weight));
-            board.get(end).add(new Node(start,weight));
+//            board.get(end).add(new Node(start,weight));
+            // 단방향 연결 그래프였었네요.
+        }
+
+        for(Node n : board.get(0)){
+            System.out.println(n.index +":"+n.distance);
         }
 
         StringTokenizer st = new StringTokenizer(br.readLine()," ");
@@ -74,6 +79,7 @@ public class Main {
                 if(currDist + linkedNode.distance < result[linkedNode.index]) {
                     // if 문의 조건을 만족했다면 최단거리테이블의 값을 갱신합니다.
                     result[linkedNode.index] = currDist + linkedNode.distance;
+                    System.out.println( currIdx +" to " + linkedNode.index + ":" + result[linkedNode.index]);
                     // 갱신 된 노드를 우선순위 큐에 넣어줍니다.
                     pq.offer(new Node(linkedNode.index, result[linkedNode.index]));
                 }
