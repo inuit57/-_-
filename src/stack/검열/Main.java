@@ -16,6 +16,9 @@ public class Main {
 
         boolean isLeft = true;
 
+        // 투포인터 사용, Deque 로 풀어야 한다는데,
+        // 감이 잘 잡히진 않는다. 다음에 다시 시도해보자.
+
         while(true){
             if(isLeft){
                 int pos = targetStr.indexOf(keyStr);
