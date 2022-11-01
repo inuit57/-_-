@@ -7,7 +7,8 @@ import java.util.stream.IntStream;
 public class Solution {
 
     public static void main(String[] args) {
-        String[] input = {"AA", "AB", "AC", "AA", "AC"} ;
+        //String[] input = {"A", "B" ,"B", "C", "A", "B", "C", "A","B","C"} ;
+        String[] input = {"ZZZ", "YYY", "NNNN", "YYY", "BBB"} ;
 
         Solution solution = new Solution();
         int[] answer = solution.solution(input);
@@ -33,14 +34,19 @@ public class Solution {
 
         Map<String,Integer> gemMap = new HashMap<>();
 
-        for(int i = 0 ; i < gems.length ; i++){
-            if( gemMap.size() == gemCnt ){ // 목표 달성
+        // 제일 끝까지 가는 경우도 있어서 +1 해줬다.
+        for(int i = 0 ; i < gems.length +1 ; i++){
+            while ( gemMap.size() == gemCnt ){ // 목표 달성
                 // 현재 길이 정보 저장 하기
                 StringBuilder sb = new StringBuilder();
                 sb.append(start+1);
                 sb.append(" ");
                 sb.append(end+1);
-                resultMap.put(end-start, sb.toString());
+                //resultMap.put(end-start, sb.toString());
+                String curr = resultMap.getOrDefault(end-start,"");
+                if( curr.compareTo(sb.toString()) > 0 || "".equals(curr)){
+                    resultMap.put(end - start , sb.toString());
+                }
 
                 //gemSet.remove(sttGem) ;  // 시작 지점에 있던 것 제거
                 String sttGem = gems[start];
@@ -49,34 +55,21 @@ public class Solution {
                 else gemMap.put(sttGem, nowCnt);
 
                 start ++;
-            }else{
-                // 넣어주기
-                gemMap.put(gems[i], gemMap.getOrDefault(gems[i],0)+1);
-                end = i ;
             }
+            // 넣어주기
+            if( i < gems.length ) {
+                gemMap.put(gems[i], gemMap.getOrDefault(gems[i], 0) + 1);
+                end = i;
+            }
+
         }
 
-        while (gemMap.size() == gemCnt){
-            String sttGem = gems[start];
-            // 현재 길이 정보 저장 하기
-            StringBuilder sb = new StringBuilder();
-            sb.append(start+1);
-            sb.append(" ");
-            sb.append(end+1);
-            resultMap.put(end-start, sb.toString());
 
-            //gemSet.remove(sttGem) ;  // 시작 지점에 있던 것 제거
-            int nowCnt = gemMap.get(sttGem) -1 ;
-            if( nowCnt < 1) gemMap.remove(sttGem);
-            else gemMap.put(sttGem, nowCnt);
-
-            start ++;
-        }
 
 
         int min = resultMap.keySet().stream().min((o1, o2) -> o1 - o2).get();
-        //System.out.println("min " + min);
-        //System.out.println(resultMap.get(min));
+        System.out.println("min " + min);
+        System.out.println(resultMap.get(min));
 
 
         String[] ss = resultMap.get(min).split(" ");
