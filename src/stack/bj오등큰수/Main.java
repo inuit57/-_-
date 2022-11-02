@@ -11,7 +11,9 @@ public class Main {
         Scanner in = new Scanner(System.in);
 
         // 수열의 각 원소 갯수 저장용
-        Map<Integer,Integer> map = new HashMap<>();
+        //Map<Integer,Integer> map = new HashMap<>();
+        int[] map = new int[1000001];
+
         // 답안 도출용 스택
         Stack<Integer> stk = new Stack<>();
 
@@ -23,7 +25,7 @@ public class Main {
             int key = in.nextInt();
             arr[i] = key;
             // 넣으면서 동시에 map에 갯수 저장
-            map.put(key, map.getOrDefault(key,0)+1);
+            map[key]++;
         }
 
 
@@ -31,7 +33,7 @@ public class Main {
         // 스택에 저장되어야 하는 것은 위치 값
         for(int i=0; i<n ; i++){
             while(!stk.isEmpty() &&
-                    map.get(arr[stk.peek()]) < map.get(arr[i]) ){
+                    map[arr[stk.peek()]] < map[arr[i]] ){
                 answer[stk.pop()] = arr[i] ;
             }
             stk.push(i);
