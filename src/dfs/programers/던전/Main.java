@@ -20,25 +20,19 @@ public class Main {
     public int solution(int k, int[][] dungeons){
         isVisit = new boolean[dungeons.length];
 
-        // 시작점을 모두 설정해서 돌리는구나.
-        for(int i=0;i<dungeons.length;i++){
-            if(k >= dungeons[i][0]){
-                dfs(k,dungeons,1,i);
-            }
-        }
+        dfs(k,dungeons,0);
 
         return maxCnt;
     }
 
-    public void dfs(int k, int[][] dungeons, int depth , int curr  ) {
-        isVisit[curr] = true;
-        k -= dungeons[curr][1] ;
+    public void dfs(int k, int[][] dungeons, int depth   ) {
         for(int i=0; i< dungeons.length ; i++){
             if( k >= dungeons[i][0] && !isVisit[i] ){
-                dfs(k,dungeons,depth+1,i);
+                isVisit[i] = true;
+                dfs(k - dungeons[i][1],dungeons,depth+1);
+                isVisit[i] = false;
             }
         }
         maxCnt = Math.max(maxCnt,depth);
-        isVisit[curr] = false;
     }
 }
