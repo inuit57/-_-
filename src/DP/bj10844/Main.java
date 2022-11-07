@@ -36,6 +36,7 @@ public class Main {
  1로 초기화 되어있어야한다.
 */
 
+    // DP는 역시 점화식
     static long recur(int digit, int val) {
 
         // 첫째 자리수에 도착한다면 더이상 탐색할 필요 없음
@@ -49,7 +50,7 @@ public class Main {
             if(val == 0) {
                 dp[digit][val] = recur(digit - 1 ,1);
             }
-            // val이 1일경우 다음은 8밖에 못옴
+            // val이 9일경우 다음은 8밖에 못옴
             else if(val== 9) {
                 dp[digit][val] = recur(digit - 1, 8);
             }
