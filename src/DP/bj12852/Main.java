@@ -4,50 +4,51 @@ import java.util.Scanner;
 
 public class Main {
 
-    static int[] arr ;
-    static int[] record;
+    static class Record{
+        int cnt;
+        String process ;
+        public Record(int cnt , String process){
+            this.cnt = cnt;
+            this.process = process;
+        }
+    }
 
     public static void main(String[] args){
         Scanner in = new Scanner(System.in);
         Main T = new Main();
 
+
         int n = in.nextInt();
-        arr = new int[n+1] ;
-        record = new int[n+1] ;
 
-        for(int i =1; i<= n ; i++){
-            T.dp(i);
-        }
+        Record[] records = new Record[n+1] ;
 
-        int answer = n ;
-        StringBuilder sb = new StringBuilder();
-        sb.append(answer).append(" ");
-
-        while(answer>1){
-            if( answer%2 == 0 && arr[n/2] < arr[n-1]){
-                answer/=2 ;
-            }else if(answer%3 == 0 && arr[n/3] < arr[n-1]){
-                answer/=3;
-            }else{
-                answer-- ;
+        records[1] = new Record(0,"1") ; // 최초값
+        for(int i =2; i<= n ; i++){
+            int cnt = Integer.MAX_VALUE;
+            int before = 0;
+            if( i%3 == 0 ){
+                cnt = records[i/3].cnt;
+                before = i/3;
             }
-            sb.append(answer).append(" ");
+
+            if(i%2 == 0){
+                if( cnt > records[i/2].cnt){
+                    cnt = records[i/2].cnt;
+                    before = i/2;
+                }
+            }
+
+            if( cnt > records[i-1].cnt){
+                cnt = records[i-1].cnt;
+                before = i-1;
+            }
+
+            records[i] = new Record(cnt +1,i+" "+records[before].process );
         }
-        System.out.println(sb);
+
+        System.out.println(records[n].cnt);
+        System.out.println(records[n].process);
     }
 
-    public void dp(int num){
-        // dp 채우기
-        if(num <= 3 ){
-            arr[num] = 1 ;
-        }else if(num%6 == 0){
-            arr[num] = Math.min(arr[num-1],Math.min(arr[num/3], arr[num/2]))+1;
-        }else if(num%3 == 0){
-            arr[num] = Math.min(arr[num/3], arr[num-1])+1 ;
-        }else if(num%2 == 0){
-            arr[num] = Math.min(arr[num/2] , arr[num-1])+1;
-        }else{
-            arr[num] = arr[num-1] + 1 ;
-        }
-    }
+
 }
