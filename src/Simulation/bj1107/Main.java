@@ -12,13 +12,26 @@ public class Main {
     static boolean[] keys = new boolean[10] ;
 
     public void dfs(int idx, int number){
-        if( idx > depth ){ // 종료조건
-            minValue = Math.min( Math.abs(inputNumber - number), minValue);
+        if( idx+1 == depth ){
+            if(depth == 1){
+                idx = 1;
+            }
+            minValue = Math.min((idx) + Math.abs(inputNumber - number), minValue);
+            //System.out.println(idx + " : " + number + " : " + minValue);
+        }
+        if( idx >= depth ){
+            minValue = Math.min((idx) + Math.abs(inputNumber - number), minValue);
+//            System.out.println(idx + " : " + number + " : " + minValue);
+        }
+
+        if( idx > depth+1 ){ // 종료조건
+            minValue =  Math.min( Math.abs(inputNumber - number)+(idx), minValue);
+//            System.out.println(idx + " : " + number + " : " + minValue);
             return;
         }
 
         // 각 자릿수 구하기
-        int curr = Integer.toString(inputNumber).charAt(idx-1)-'0' ;
+        // int curr = Integer.toString(inputNumber).charAt(idx-1)-'0' ;
 
         for(int i =0 ; i< 10; i++){
             if(keys[i]){
@@ -49,8 +62,8 @@ public class Main {
         if( n == 10 || inputNumber == 100 ){
             answer =  Math.abs(inputNumber-100);
         }else {
-            T.dfs(1, 0);
-            answer = minValue + depth ;
+            T.dfs(0, 0);
+            answer = minValue ;
         }
         System.out.println(answer);
     }
