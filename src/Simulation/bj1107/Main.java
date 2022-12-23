@@ -1,39 +1,106 @@
 package Simulation.bj1107;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args)  {
-        Scanner scan = new Scanner(System.in);
+    // 브루트 포스로 dfs 만들자 그럼
+    static int depth ; // 최종 길이
+    static int minValue = Integer.MAX_VALUE; // 찾으려는 답
+    static int inputNumber  ;
+    static boolean[] keys = new boolean[10] ;
 
-        int target = scan.nextInt();
-        int m = scan.nextInt();
-
-        boolean[] broken = new boolean[10];
-        for(int i = 0; i < m; i++) {
-            int n = scan.nextInt();
-            broken[n] = true;
+    public void dfs(int idx, int number){
+        if( idx+1 == depth ){
+            if(depth == 1){
+                idx = 1;
+            }
+            minValue = Math.min((idx) + Math.abs(inputNumber - number), minValue);
+            //System.out.println(idx + " : " + number + " : " + minValue);
+        }
+        if( idx >= depth ){
+            minValue = Math.min((idx) + Math.abs(inputNumber - number), minValue);
+//            System.out.println(idx + " : " + number + " : " + minValue);
         }
 
-        int result = Math.abs(target - 100); //초기값 설정
-        for(int i = 0; i <= 999999; i++) {
-            String str = String.valueOf(i);
-            int len = str.length();
+        if( idx > depth+1 ){ // 종료조건
+            minValue =  Math.min( Math.abs(inputNumber - number)+(idx), minValue);
+//            System.out.println(idx + " : " + number + " : " + minValue);
+            return;
+        }
 
-            boolean isBreak = false;
-            for(int j = 0; j < len; j++) {
-                if(broken[str.charAt(j) - '0']) { //고장난 버튼을 눌러야 하면
-                    isBreak = true;
-                    break; //더 이상 탐색하지 않고 빠져나온다.
-                }
-            }
-            if(!isBreak) { //i를 누를때 고장난 버튼을 누르지 않는다면
-                int min = Math.abs(target - i) + len; //i를 누른 후(len) target까지 이동하는 횟수(target - i)
-                result = Math.min(min, result);
+        // 각 자릿수 구하기
+        // int curr = Integer.toString(inputNumber).charAt(idx-1)-'0' ;
+
+        for(int i =0 ; i< 10; i++){
+            if(keys[i]){
+                dfs(idx+1, number*10 + i);
             }
         }
-        System.out.println(result);
     }
+
+
+    public static void main(String[] args){
+        Scanner in = new Scanner(System.in);
+        Main T = new Main();
+
+        String number = in.nextLine();
+        depth = number.length();
+        inputNumber =  Integer.parseInt(number);
+
+
+        int n = in.nextInt();
+        Arrays.fill(keys,true);
+
+        for(int i=0; i< n ;i++){
+            keys[in.nextInt()] = false;
+        }
+
+        int answer = 0 ;
+
+        if( n == 10 || inputNumber == 100 ){
+            answer =  Math.abs(inputNumber-100);
+        }else {
+            T.dfs(0, 0);
+            answer = minValue ;
+        }
+        System.out.println(answer);
+    }
+
+//    public int solution(String number, boolean[] keys, int n ){
+//        int answer = 0;
+//        int inputNumber = Integer.parseInt(number);
+//
+//        String[] split = number.split("");
+//        StringBuilder sb = new StringBuilder();
+//
+//        if( n == 10 || inputNumber == 100 ){
+//            return Math.abs(inputNumber-100);
+//            // 100에서 수동으로 이동해야 한다.
+//        }
+//
+//        // 하나라도 멀쩡한 버튼이 있다면
+//        for(String s : split){
+//            int curr = Integer.parseInt(s);
+//            if( !keys[curr] ){
+//                //curr = (curr+1)%10 ;
+//                //curr = (curr-1)%10 ;
+//            }
+////            while(!keys[curr]){
+////                //curr = (curr+1)%10 ; // 되는 버튼 찾기
+////                // 위로 갈지 아래로 갈지?
+////            }
+//            sb.append(curr);
+//            answer ++ ; // 자릿수만큼 증가시키기
+//        }
+//
+//        answer += Math.abs(Integer.parseInt(sb.toString()) - inputNumber);
+//        // Math.abs(Integer.parseInt(sb.toString()) - inputNumber);
+//        // 결국 찾으려는 답은 이건데
+//        return answer;
+//    }
+
+
 
 }
